@@ -100,6 +100,7 @@ abstract final class S {
   static const unreadTerm = 'UNGELESEN';
   static const listView = 'Liste';
   static const mapView = 'Flurkarte';
+  static const manageSources = 'Quellen verwalten';
   static const flurkarteKennung = 'FLURKARTE · FLÄCHE NACH BEITRÄGEN IM MONAT';
   static const flurkarteLegendLow = 'still';
   static const flurkarteLegendHigh = 'laut';

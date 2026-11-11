@@ -26,6 +26,7 @@ import 'reader/reader_view.dart';
 import 'settings/about_page.dart';
 import 'settings/settings_page.dart';
 import 'sources/add_feed_sheet.dart';
+import 'sources/feed_sheet.dart';
 import 'sources/sources_pane.dart';
 
 /// The shell.
@@ -279,7 +280,7 @@ class _ShellState extends ConsumerState<Shell> with WidgetsBindingObserver {
 
     Widget list;
     if (managing) {
-      list = SourcesPane(leading: toggle, onOpen: (scope, _) => ref.read(navProvider.notifier).show(scope));
+      list = SourcesPane(leading: toggle, mapOnly: true, onOpen: (scope, _) => ref.read(navProvider.notifier).show(scope));
     } else {
       final (title, kennung) = switch (nav.scope) {
         TodayScope() => (S.today, S.todayKennung),
@@ -345,19 +346,29 @@ class Sidebar extends ConsumerWidget {
     final pointer = h.density == HorizontDensity.pointer;
     final t = Theme.of(context).textTheme;
     String? count(int n) => n > 0 ? '$n' : null;
+    final managing = nav.place == Place.sources && nav.scope is! FeedScope && nav.scope is! FolderScope;
 
     final byFolder = <int?, List<FeedRow>>{};
     for (final f in feeds) {
       (byFolder[f.feed.folderId] ??= []).add(f);
     }
 
-    HorizontSidebarItem feed(FeedRow f, {int indent = 0}) => HorizontSidebarItem(
-          icon: HorizontSymbols.rssFeed,
-          label: f.title,
-          count: count(f.unread),
-          indent: indent,
-          selected: nav.scope == FeedScope(f.feed.id),
-          onTap: () => controller.show(FeedScope(f.feed.id)),
+    // A right click (long press on touch) opens a feed's settings, as the
+    // info button did on the Quellen list.
+    Widget feed(FeedRow f, {int indent = 0}) => GestureDetector(
+          onSecondaryTap: () => showFeedSheet(context, f),
+          onLongPress: () => showFeedSheet(context, f),
+          child: HorizontSidebarItem(
+            icon: HorizontSymbols.rssFeed,
+            label: f.title,
+            count: count(f.unread),
+            indent: indent,
+            tooltip: f.feed.errorCount >= 2 ? (f.feed.lastError ?? S.error) : null,
+            // A feed that keeps failing says so here, not only in its sheet.
+            trailing: f.feed.errorCount >= 2 ? Icon(HorizontStatus.warning.icon, size: HzIconSize.inline, color: HorizontStatus.warning.color(h.colors)) : null,
+            selected: nav.scope == FeedScope(f.feed.id),
+            onTap: () => controller.show(FeedScope(f.feed.id)),
+          ),
         );
 
     return HorizontSidebar(
@@ -392,24 +403,42 @@ class Sidebar extends ConsumerWidget {
           selected: nav.place == Place.archive,
           onTap: () => controller.go(Place.archive),
         ),
-        HorizontSidebarItem(
-          icon: HorizontSymbols.map,
-          label: S.sources,
-          selected: nav.place == Place.sources && nav.scope is! FeedScope && nav.scope is! FolderScope,
-          onTap: () {
-            controller.show(const TodayScope());
-            controller.go(Place.sources);
-          },
+        // The heading of the sources opens their management (the
+        // Flurkarte); the sources themselves are listed right below.
+        Semantics(
+          button: true,
+          selected: managing,
+          label: S.manageSources,
+          child: InkWell(
+            borderRadius: const BorderRadius.all(Radius.circular(HzSoft.row)),
+            onTap: () {
+              controller.show(const TodayScope());
+              controller.go(Place.sources);
+            },
+            child: ExcludeSemantics(
+              child: HorizontSidebarLabel(
+                S.sources,
+                count: feeds.length,
+                trailing: Tooltip(
+                  message: S.manageSources,
+                  child: Icon(HorizontSymbols.map, size: HzIconSize.inline, color: managing ? h.colors.accentText : h.colors.textMuted),
+                ),
+              ),
+            ),
+          ),
         ),
-        HorizontSidebarLabel(S.sources, count: feeds.length),
         for (final folder in folders)
           if (byFolder.containsKey(folder.id)) ...[
-            HorizontSidebarItem(
-              icon: HorizontSymbols.folder,
-              label: folder.name,
-              count: count(byFolder[folder.id]!.fold<int>(0, (a, f) => a + f.unread)),
-              selected: nav.scope == FolderScope(folder.id),
-              onTap: () => controller.show(FolderScope(folder.id)),
+            GestureDetector(
+              onSecondaryTap: () => showFolderMenu(context, ref, folder.id, folder.name),
+              onLongPress: () => showFolderMenu(context, ref, folder.id, folder.name),
+              child: HorizontSidebarItem(
+                icon: HorizontSymbols.folder,
+                label: folder.name,
+                count: count(byFolder[folder.id]!.fold<int>(0, (a, f) => a + f.unread)),
+                selected: nav.scope == FolderScope(folder.id),
+                onTap: () => controller.show(FolderScope(folder.id)),
+              ),
             ),
             for (final f in byFolder[folder.id]!) feed(f, indent: 1),
           ],

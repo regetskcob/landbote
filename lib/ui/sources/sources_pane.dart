@@ -1,4 +1,5 @@
-/// Quellen: the feeds by folder as a list, or as the Flurkarte.
+/// Quellen: the feeds by folder as a list, or as the Flurkarte. Beside the
+/// sidebar, which already lists every source, only the Flurkarte.
 library;
 
 import 'dart:async';
@@ -24,13 +25,17 @@ typedef OpenScope = void Function(ArticleScope scope, String title);
 /// The pane.
 class SourcesPane extends ConsumerStatefulWidget {
   /// Creates the pane; [onOpen] shows a feed's or folder's list.
-  const SourcesPane({required this.onOpen, this.leading, super.key});
+  const SourcesPane({required this.onOpen, this.leading, this.mapOnly = false, super.key});
 
   /// Shows a list.
   final OpenScope onOpen;
 
   /// The sidebar toggle, if any.
   final Widget? leading;
+
+  /// Whether only the Flurkarte is shown: next to the sidebar the list would
+  /// repeat it. Folders and feeds are managed there with a right click.
+  final bool mapOnly;
 
   @override
   ConsumerState<SourcesPane> createState() => _SourcesPaneState();
@@ -43,7 +48,7 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
   Widget build(BuildContext context) {
     final feeds = ref.watch(feedsProvider).value ?? const <FeedRow>[];
     final folders = ref.watch(foldersProvider).value ?? const [];
-    final asMap = ref.watch(settingsProvider.select((s) => s.sourcesAsMap));
+    final asMap = widget.mapOnly || ref.watch(settingsProvider.select((s) => s.sourcesAsMap));
     final add = HorizontPrimaryAction(icon: HorizontSymbols.addLink, label: S.addSource, onPressed: () => showAddFeed(context));
     final c = HorizontTheme.of(context).colors;
 
@@ -90,7 +95,7 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
                     : IconButton(
                         tooltip: S.rename,
                         icon: Icon(horizontMoreSymbol(Theme.of(context).platform), size: HzIconSize.row),
-                        onPressed: () => _folderMenu(id, name),
+                        onPressed: () => showFolderMenu(context, ref, id, name),
                       ),
               ),
               if (!_collapsed.contains(id)) ...[
@@ -115,7 +120,7 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
         titleSpacing: widget.leading == null ? HzSpace.s16 : null,
         title: HorizontTitle(kennung: S.sourcesKennung(feeds.length), title: S.sources),
         actions: [
-          if (feeds.isNotEmpty)
+          if (feeds.isNotEmpty && !widget.mapOnly)
             IconButton(
               tooltip: asMap ? S.listView : S.mapView,
               icon: Icon(asMap ? HorizontSymbols.viewAgenda : HorizontSymbols.map),
@@ -129,30 +134,6 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
       floatingActionButton: add.fab(context),
       body: DecoratedBox(decoration: BoxDecoration(color: c.bg), child: body),
     );
-  }
-
-  Future<void> _folderMenu(int id, String name) async {
-    final repo = ref.read(repositoryProvider);
-    final choice = await showModalBottomSheet<String>(
-      context: context,
-      useRootNavigator: true,
-      builder: (context) => SafeArea(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          ListTile(title: const Text(S.rename), onTap: () => Navigator.pop(context, 'rename')),
-          ListTile(
-            title: Text(S.deleteFolder, style: TextStyle(color: HorizontTheme.of(context).colors.critical)),
-            onTap: () => Navigator.pop(context, 'delete'),
-          ),
-        ]),
-      ),
-    );
-    if (!mounted) return;
-    if (choice == 'rename') {
-      final n = await askName(context, title: S.rename, initial: name);
-      if (n != null && n.isNotEmpty) await repo.renameFolder(id, n);
-    } else if (choice == 'delete') {
-      if (await confirmDestructive(context, message: S.deleteFolderConfirm(name), action: S.delete)) await repo.deleteFolder(id);
-    }
   }
 }
 
