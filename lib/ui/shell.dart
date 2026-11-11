@@ -327,7 +327,9 @@ class _ShellState extends ConsumerState<Shell> with WidgetsBindingObserver {
   }
 }
 
-/// The sidebar from 600: places, then the sources by folder.
+/// The sidebar from 600: places, then the sources by folder, adding a
+/// source and the settings fixed at the foot. Horizont's [HorizontSidebar]
+/// draws it in the soft style; only the lockup on top is Landbote's own.
 class Sidebar extends ConsumerWidget {
   /// Creates the sidebar.
   const Sidebar({super.key});
@@ -335,101 +337,84 @@ class Sidebar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final h = HorizontTheme.of(context);
-    final c = h.colors;
     final nav = ref.watch(navProvider);
     final controller = ref.read(navProvider.notifier);
     final unread = ref.watch(unreadTodayProvider).value ?? 0;
     final feeds = ref.watch(feedsProvider).value ?? const <FeedRow>[];
     final folders = ref.watch(foldersProvider).value ?? const [];
     final pointer = h.density == HorizontDensity.pointer;
-    final rowHeight = pointer ? HzSize.rowDense + HzSpace.s4 : HzSize.touch;
     final t = Theme.of(context).textTheme;
-
-    Widget row({required IconData icon, required String label, required bool selected, required VoidCallback onTap, int? count, bool indent = false}) =>
-        HorizontSelectable(
-          selected: selected,
-          onTap: onTap,
-          minHeight: rowHeight,
-          padding: EdgeInsetsDirectional.only(start: indent ? HzSpace.s32 : HzSpace.s16, end: HzSpace.s16),
-          child: Row(children: [
-            Icon(icon, size: HzIconSize.row, color: selected ? c.accentText : c.text),
-            const SizedBox(width: HzSpace.s12),
-            Expanded(child: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis, style: t.bodyMedium?.copyWith(fontWeight: selected ? FontWeight.w600 : null))),
-            if (count != null && count > 0) Text('$count', style: h.data.copyWith(color: c.textMuted)),
-          ]),
-        );
+    String? count(int n) => n > 0 ? '$n' : null;
 
     final byFolder = <int?, List<FeedRow>>{};
     for (final f in feeds) {
       (byFolder[f.feed.folderId] ??= []).add(f);
     }
 
-    return Container(
+    HorizontSidebarItem feed(FeedRow f, {int indent = 0}) => HorizontSidebarItem(
+          icon: HorizontSymbols.rssFeed,
+          label: f.title,
+          count: count(f.unread),
+          indent: indent,
+          selected: nav.scope == FeedScope(f.feed.id),
+          onTap: () => controller.show(FeedScope(f.feed.id)),
+        );
+
+    return HorizontSidebar(
       width: pointer ? HzSize.rail + HzSpace.s24 : HzSize.sidebar,
-      decoration: BoxDecoration(color: c.sunken, border: BorderDirectional(end: BorderSide(color: c.line, width: HzLine.hairline))),
-      child: SafeArea(
-        right: false,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(HzSpace.s16, pointer && defaultTargetPlatform == TargetPlatform.macOS ? HzSpace.s32 : HzSpace.s16, HzSpace.s16, HzSpace.s12),
-            child: HorizontLockup(h.product, label: S.appName, style: t.titleMedium),
-          ),
-          Expanded(
-            child: ListView(children: [
-              row(icon: HorizontSymbols.today, label: S.today, count: unread, selected: nav.place == Place.today, onTap: () => controller.go(Place.today)),
-              row(icon: HorizontSymbols.bookmark, label: S.saved, selected: nav.place == Place.saved, onTap: () => controller.go(Place.saved)),
-              row(icon: HorizontSymbols.archive, label: S.archive, selected: nav.place == Place.archive, onTap: () => controller.go(Place.archive)),
-              row(
-                icon: HorizontSymbols.map,
-                label: S.sources,
-                selected: nav.place == Place.sources && nav.scope is! FeedScope && nav.scope is! FolderScope,
-                onTap: () {
-                  controller.show(const TodayScope());
-                  controller.go(Place.sources);
-                },
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(HzSpace.s16, HzSpace.s24, HzSpace.s16, HzSpace.s8),
-                child: Kennung(S.sourcesKennung(feeds.length)),
-              ),
-              for (final folder in folders)
-                if (byFolder.containsKey(folder.id)) ...[
-                  row(
-                    icon: HorizontSymbols.folder,
-                    label: folder.name,
-                    count: byFolder[folder.id]!.fold<int>(0, (a, f) => a + f.unread),
-                    selected: nav.scope == FolderScope(folder.id),
-                    onTap: () => controller.show(FolderScope(folder.id)),
-                  ),
-                  for (final f in byFolder[folder.id]!)
-                    row(
-                      icon: HorizontSymbols.rssFeed,
-                      label: f.title,
-                      count: f.unread,
-                      indent: true,
-                      selected: nav.scope == FeedScope(f.feed.id),
-                      onTap: () => controller.show(FeedScope(f.feed.id)),
-                    ),
-                ],
-              for (final f in byFolder[null] ?? const <FeedRow>[])
-                row(
-                  icon: HorizontSymbols.rssFeed,
-                  label: f.title,
-                  count: f.unread,
-                  selected: nav.scope == FeedScope(f.feed.id),
-                  onTap: () => controller.show(FeedScope(f.feed.id)),
-                ),
-            ]),
-          ),
-          DecoratedBox(
-            decoration: BoxDecoration(border: Border(top: BorderSide(color: c.line, width: HzLine.hairline))),
-            child: Column(children: [
-              row(icon: HorizontSymbols.addLink, label: S.addSource, selected: false, onTap: () => showAddFeed(context)),
-              row(icon: HorizontSymbols.settings, label: S.settings, selected: false, onTap: () => pushSettings(context)),
-            ]),
-          ),
-        ]),
+      // On macOS the content runs under the transparent title bar: the
+      // lockup keeps clear of the window buttons.
+      header: Padding(
+        padding: EdgeInsets.only(top: pointer && defaultTargetPlatform == TargetPlatform.macOS ? HzSpace.s16 : 0),
+        child: HorizontLockup(h.product, label: S.appName, style: t.titleMedium),
       ),
+      footer: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        HorizontSidebarItem(icon: HorizontSymbols.addLink, label: S.addSource, onTap: () => showAddFeed(context)),
+        HorizontSidebarItem(icon: HorizontSymbols.settings, label: S.settings, onTap: () => pushSettings(context)),
+      ]),
+      children: [
+        HorizontSidebarItem(
+          icon: HorizontSymbols.today,
+          label: S.today,
+          count: count(unread),
+          selected: nav.place == Place.today,
+          onTap: () => controller.go(Place.today),
+        ),
+        HorizontSidebarItem(
+          icon: HorizontSymbols.bookmark,
+          label: S.saved,
+          selected: nav.place == Place.saved,
+          onTap: () => controller.go(Place.saved),
+        ),
+        HorizontSidebarItem(
+          icon: HorizontSymbols.archive,
+          label: S.archive,
+          selected: nav.place == Place.archive,
+          onTap: () => controller.go(Place.archive),
+        ),
+        HorizontSidebarItem(
+          icon: HorizontSymbols.map,
+          label: S.sources,
+          selected: nav.place == Place.sources && nav.scope is! FeedScope && nav.scope is! FolderScope,
+          onTap: () {
+            controller.show(const TodayScope());
+            controller.go(Place.sources);
+          },
+        ),
+        HorizontSidebarLabel(S.sources, count: feeds.length),
+        for (final folder in folders)
+          if (byFolder.containsKey(folder.id)) ...[
+            HorizontSidebarItem(
+              icon: HorizontSymbols.folder,
+              label: folder.name,
+              count: count(byFolder[folder.id]!.fold<int>(0, (a, f) => a + f.unread)),
+              selected: nav.scope == FolderScope(folder.id),
+              onTap: () => controller.show(FolderScope(folder.id)),
+            ),
+            for (final f in byFolder[folder.id]!) feed(f, indent: 1),
+          ],
+        for (final f in byFolder[null] ?? const <FeedRow>[]) feed(f),
+      ],
     );
   }
 }
