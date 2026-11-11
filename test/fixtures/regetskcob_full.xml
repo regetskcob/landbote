@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>regetskcob</title>
+    <link>https://www.regetskcob.de/</link>
+    <description>Landschafts- und Luftbilder vom Niederrhein, Film-Rezepte, Projekte zwischen Technik und Natur und Buchrezensionen, seit 2015.</description>
+    <generator>Hugo</generator>
+    <language>de-DE</language>
+    <copyright>© Daniel Bocksteger</copyright>
+    <image>
+      <url>https://www.regetskcob.de/android-chrome-192x192.png</url>
+      <title>regetskcob</title>
+      <link>https://www.regetskcob.de/</link>
+    </image>
+    <lastBuildDate>Thu, 05 Nov 2026 09:00:00 +0100</lastBuildDate>
+    <atom:link href="https://www.regetskcob.de/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>⚡️ | KNX beim Hausbau: Was ich vorab verlegt habe</title>
+      <link>https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/</link>
+      <pubDate>Thu, 05 Nov 2026 09:00:00 +0100</pubDate>
+      <guid isPermaLink="true">https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/</guid>
+      <dc:creator>Daniel Bocksteger</dc:creator>
+      <category>Smarthome</category>
+      <description>Unser Haus habe ich elektrisch selbst geplant und zum größten Teil selbst verdrahtet. Fünf Jahre später: welche Entscheidungen bei der KNX-Planung sich bewährt …</description>
+      <content:encoded><![CDATA[<p>Als wir 2021 mit dem Bau unseres Hauses angefangen haben, stand eines früh fest: Es wird KNX. Die Elektroplanung habe ich selbst gemacht und den größten Teil auch selbst verdrahtet. Rund fünf Jahre und eine ETS-Inventur später lohnt sich ein Blick zurück, was sich bewährt hat.</p>
+<h2 class="heading" id="leitung-überall-hin">
+  Leitung überall hin
+  <a class="anchor" href="#leitung-%c3%bcberall-hin">#</a>
+</h2>
+<p>Der wichtigste Grundsatz war, KNX-Leitung an jede Stelle zu legen, an der sie irgendwann gebraucht werden könnte. Nachträglich ziehen ist teuer und schmutzig, ein ungenutztes Kabel in der Decke kostet fast nichts.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/kabelrollen_hu_8c38ee4169f3c79e.webp" data-lightbox><div class="img-container" style="--w: 1003; --h: 931;">
+        <img loading="lazy" decoding="async"
+             alt="Mehrere Rollen Leerrohr und eine große Rolle graues Kabel auf einer Palette, der Lieferschein ist unkenntlich gemacht"
+             src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/kabelrollen_hu_12f1d7a60b888797.webp"
+            
+            
+             width="800" height="743">
+      </div></a>
+  <div class="caption-container">
+    <figcaption>Der Anfang: Leerrohr und Kabel auf der Palette.</figcaption>
+  </div>
+</figure>
+</p>
+<ul>
+<li>An nahezu jeder Lampengruppe liegt ein Ausläufer der Busleitung. So lassen sich Präsenz-, Bewegungs- oder Rauchmelder später ohne Stemmarbeiten nachrüsten.</li>
+<li>Jeder Raum hat mindestens eine KNX-Leitung für den Taster.</li>
+<li>Zwei Räume haben bewusst keinen Taster: Im Gäste-WC und im Technikraum schaltet ein Bewegungsmelder in der abgehängten Decke das Licht, die Temperatur messen dort Zigbee-Sensoren.</li>
+</ul>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/rauchmelder-leitung_hu_35ef228a4e7263.webp" data-lightbox><div class="img-container" style="--w: 1500; --h: 1836;">
+        <img loading="lazy" decoding="async"
+             alt="Aus einer Einbaudose in der Decke hängt eine rote und eine schwarze Ader mit grüner Klemme für einen Rauchmelder"
+             src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/rauchmelder-leitung_hu_5b3d75f5c49a9c6b.webp"
+            
+            
+             width="1200" height="1469">
+      </div></a>
+  <div class="caption-container">
+    <figcaption>Die Leitung für die Rauchmelder: Über diese Klemme hängt je Geschoss jeder Gira-Melder daran,<br>
+ein KNX-Modul meldet den Alarm weiter.</figcaption>
+  </div>
+</figure>
+</p>
+<h2 class="heading" id="sternförmig-verdrahtet">
+  Sternförmig verdrahtet
+  <a class="anchor" href="#sternf%c3%b6rmig-verdrahtet">#</a>
+</h2>
+<p>Jeder Raum ist sternförmig angefahren, mit eigenen Zuleitungen für Licht, Rollläden und Steckdosen. Große Verbraucher haben eine eigene Zuleitung. Das macht den Verteiler voll, hat aber einen großen Vorteil: Jeder Kanal ist einzeln schalt- und messbar, und für eine Änderung muss ich nur im Verteiler umklemmen.</p>
+<p><figure class=""><div class="img-container">
+        <img loading="lazy" decoding="async" alt="Schema: Vom Verteiler laufen getrennte Leitungen für Licht, Rollladen und Steckdosen zu zwei Beispielräumen, ein großer Verbraucher hat eine eigene Zuleitung" src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/sternverdrahtung.svg">
+      </div>
+  <div class="caption-container">
+    <figcaption>Vereinfachtes Schema der sternförmigen Verdrahtung.</figcaption>
+  </div>
+</figure>
+</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/verteiler-rohbau_hu_ada602bd0aad5ac3.webp" data-lightbox><div class="img-container" style="--w: 2000; --h: 1500;">
+        <img loading="lazy" decoding="async"
+             alt="Noch leerer Verteiler in einer Wand aus Kalksandstein, von oben hängen Dutzende graue, gelbe und grüne Leitungen davor, darüber eine blaue Plane"
+             src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/verteiler-rohbau_hu_8b6ff441c68d7d28.webp"
+            
+            
+             width="1600" height="1200">
+      </div></a>
+  <div class="caption-container">
+    <figcaption>So sieht sternförmig im Rohbau aus.</figcaption>
+  </div>
+</figure>
+</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/reihenklemmen_hu_63f026cf77fdff43.webp" data-lightbox><div class="img-container" style="--w: 2000; --h: 1382;">
+        <img loading="lazy" decoding="async"
+             alt="Blaue und graue Reihenklemmen auf einer Hutschiene mit orangefarbenen Hebeln, beschriftet mit Rollladen und den Nummern 1 bis 7"
+             src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/reihenklemmen_hu_af9835d36f8a5e69.webp"
+            
+            
+             width="1600" height="1106">
+      </div></a>
+  <div class="caption-container">
+    <figcaption>Reihenklemmen für die Rollläden, nummeriert vor dem Einbau.</figcaption>
+  </div>
+</figure>
+</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/verteiler-aktoren_hu_6e95ba61184538c1.webp" data-lightbox><div class="img-container" style="--w: 2016; --h: 1512;">
+        <img loading="lazy" decoding="async"
+             alt="Blick in den Verteiler: zwei Reihen MDT-Aktoren mit blauen Tasten und gelben Status-LEDs, darunter beschriftete Leitungsschutzschalter für die Beleuchtung im Erdgeschoss und Obergeschoss"
+             src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/verteiler-aktoren_hu_d0924438d8cde92a.webp"
+            
+            
+             width="1600" height="1200">
+      </div></a>
+</figure>
+</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/verteiler-im-aufbau_hu_349ad36e551e8c9d.webp" data-lightbox><div class="img-container" style="--w: 2000; --h: 1334;">
+        <img loading="lazy" decoding="async"
+             alt="Der Verteiler im Aufbau: oben Reihenklemmen, darunter mehrere Reihen KNX-Aktoren, unten rechts Gira S1 und X1"
+             src="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/verteiler-im-aufbau_hu_fd488991a8f38b81.webp"
+            
+            
+             width="1600" height="1067">
+      </div></a>
+  <div class="caption-container">
+    <figcaption>Mitten im Aufbau: oben die Klemmen, darunter die Aktoren. Angeschlossen sind hier erst die Rollläden.</figcaption>
+  </div>
+</figure>
+</p>
+<p>Im Verteiler stecken heute:</p>
+<ul>
+<li>zwei Schaltaktoren mit 20 und 16 Kanälen für Licht und Steckdosen</li>
+<li>ein Schaltaktor mit Strommessung für Waschmaschine, Trockner, Multimedia und die Brauchwasserpumpe</li>
+<li>drei Dimmaktoren mit je vier Kanälen</li>
+<li>drei Jalousieaktoren für die Rollläden</li>
+<li>zwei Heizungsaktoren für die Stellantriebe der Fußbodenheizung</li>
+<li>ein Universalaktor für Außenleuchten, Garagenlicht und das Tor</li>
+<li>der Gira X1 und der Gira S1</li>
+</ul>
+<p>Hinter einem Linienkoppler laufen zwei Linien. Die zweite versorgt alles außerhalb des Hauses.</p>
+<h2 class="heading" id="gruppenadressen-mit-system">
+  Gruppenadressen mit System
+  <a class="anchor" href="#gruppenadressen-mit-system">#</a>
+</h2>
+<p>Rund 600 Gruppenadressen sind es geworden. Damit das überschaubar bleibt, hat jede Hauptgruppe ein Thema: Licht, Heizung, Rollläden, Reedkontakte, Meldungen, Logik und Sonstiges wie Wetter und Verbrauch. Darunter folgt in jeder Hauptgruppe dieselbe Logik, etwa Schalten, Dimmen und Rückmeldung bei der Beleuchtung.</p>
+<p>Mein Tipp: Legt die Zentralfunktionen von Anfang an mit an. Eine Adresse für „alles aus“ oder für alle Rollläden einer Fassade ist bei der Programmierung schnell erledigt und später Gold wert, weil ein einziges Telegramm viele Kanäle schaltet.</p>
+<h2 class="heading" id="wie-wir-das-haus-bedienen">
+  Wie wir das Haus bedienen
+  <a class="anchor" href="#wie-wir-das-haus-bedienen">#</a>
+</h2>
+<p>Im Januar habe ich die Bedienung noch so aufgeschrieben:</p>
+<ol>
+<li>Taster und Präsenzmelder</li>
+<li>Apple Home auf iPhone, iPad und Mac</li>
+<li>die Gira-App und das Türpanel</li>
+<li>Home Assistant, damals noch als Experiment</li>
+</ol>
+<p>Heute sieht die Reihenfolge anders aus. Die Taster sind weiterhin die erste Wahl und funktionieren ohne jeden Server. Apple Home hängt aber inzwischen an Home Assistant, über fünf HomeKit-Bridges mit festen Listen. Home Assistant ist vom Experiment zur Zentrale geworden.</p>
+<h2 class="heading" id="was-erst-später-auffiel">
+  Was erst später auffiel
+  <a class="anchor" href="#was-erst-sp%c3%a4ter-auffiel">#</a>
+</h2>
+<p>Beim Abgleich der ETS mit Home Assistant im Oktober kamen ein paar Dinge zutage, die ihr bei eurer eigenen Inbetriebnahme gleich mitprüfen könnt:</p>
+<ul>
+<li><strong>Verpolte Reedkontakte:</strong> An einem Küchenfenster waren die Kontakte verkehrt herum ausgewertet. Der Jalousieaktor hielt das Fenster für offen und sperrte die Abwärtsfahrt des Rollladens.</li>
+<li><strong>Gleich benannte Adressen:</strong> Zwei Gruppenadressen trugen denselben Namen, die Visualisierung schaltete die eine, Home Assistant die andere.</li>
+<li><strong>Falsch beschriftete Kanäle:</strong> Der Messkanal „Dunstabzug“ hat in Wahrheit den Trockner gemessen.</li>
+</ul>
+<p>Und trotz aller Planung fehlt hier und da tatsächlich ein Taster oder eine Steckdose. Vor allem die Außensteckdosen direkt an der Hausfassade sind irgendwann im Stress untergegangen.</p>
+<h2 class="heading" id="fazit">
+  Fazit
+  <a class="anchor" href="#fazit">#</a>
+</h2>
+<p>Immer wieder so. 🙂</p>
+<p>Die Leitung, die heute noch ungenutzt in der Decke liegt, hat kaum etwas gekostet und hält mir alle Möglichkeiten offen. Auch der volle Verteiler war den Aufwand wert, weil eine Änderung dort nur noch ein Umklemmen ist. Und während Home Assistant in diesen Jahren vom Experiment zur Zentrale geworden ist, sind die Taster die erste Wahl geblieben und funktionieren weiterhin ohne jeden Server.</p>
+<p>Ganz ohne Lücken geht es trotzdem nicht, das zeigen die fehlenden Außensteckdosen. Wenn ihr selbst baut, legt lieber noch eine Leitung mehr, gerade nach draußen.</p>
+]]></content:encoded>
+      <media:content url="https://www.regetskcob.de/blog/knx-beim-hausbau-geplant/cover_hu_cd4c1254d175482d.jpg" medium="image" type="image/jpeg" />
+    </item><item>
+      <title>📚 | Der Jaga und der Koch</title>
+      <link>https://www.regetskcob.de/blog/der-jaga-und-der-koch/</link>
+      <pubDate>Sun, 01 Nov 2026 12:00:00 +0100</pubDate>
+      <guid isPermaLink="true">https://www.regetskcob.de/blog/der-jaga-und-der-koch/</guid>
+      <dc:creator>Daniel Bocksteger</dc:creator>
+      <category>Bücher</category>
+      <category>Jagd</category>
+      <category>Kochen</category>
+      <description>Spitzenkoch Rudi Obauer und Berufsjäger Christoph Burgstaller gehen gemeinsam auf die Pirsch und bringen das Wild danach auf den Teller: Wildkunde, …</description>
+      <content:encoded><![CDATA[<p>Ein Spitzenkoch und ein Berufsjäger gehen gemeinsam auf die Pirsch und bringen das Wild danach auf den Teller. „Der Jaga und der Koch“ von Christoph Burgstaller und Rudi Obauer erzählt davon mit Fotos, Geschichten und Rezepten. Der Untertitel verrät, worum es geht: „Unser Wild kennen, verstehen und genießen“.</p>
+<h2 class="heading" id="das-buch">
+  Das Buch
+  <a class="anchor" href="#das-buch">#</a>
+</h2>
+<p>Christoph Burgstaller ist Berufsjäger aus Uttendorf und bereitet in seinen Kursen Jungjäger auf die Jagdprüfung vor. Als Wildtier-Fotograf stammen von ihm auch die Fotos in <a href="https://www.regetskcob.de/blog/unser-wild/">Unser Wild</a>
+, einem Buch, das ich hier ebenfalls besprochen habe.</p>
+<p>Rudi Obauer ist Spitzenkoch aus Werfen, er führt gemeinsam mit seinem Bruder Karl das Restaurant und Hotel Obauer und ist vielfach ausgezeichnet.</p>
+<p>Das Buch erschien 2019 im Servus Verlag bei Benevento Publishing, mein Exemplar stammt aus der 4. Auflage. Es ist großformatig (23 × 28,5 cm), hat 384 Seiten und kostet 48 €. Das Vorwort schrieb Tobias Moretti, die Texte stammen von Werner Meisinger, der auch „Unser Wild“ geschrieben hat.</p>
+<p>Das Buch läuft von vorn nach hinten durch und teilt sich in zwei Hälften: Gut 200 Seiten gehören dem Jäger, knapp 170 dem Koch. Der Verlag beschreibt es als Kochbuch, Wildkundebuch und Fotoband in einem, und das trifft es sehr gut.</p>
+<aside class="nachtrag">
+  <figure class="nachtrag-image">
+    <img src="https://www.regetskcob.de/blog/der-jaga-und-der-koch/sonderausgabe_hu_d2de4e48f352cc71.webp" width="260" height="260" alt="Die limitierte Sonderausgabe von „Der Jaga und der Koch“: ein rosafarbenes Buch mit dem Titel und einem Foto eines gebundenen Bratens, dahinter ein grünes Buch, beide zu einem Band verbunden, auf einem rosa Samtwürfel vor einem dunkelgrünen Vorhang" loading="lazy" decoding="async">
+    <figcaption>Bild: Verlag</figcaption>
+  </figure>
+  <p class="nachtrag-label">Limitierte Sonderausgabe</p><p>Neben der normalen Ausgabe gibt es seit Oktober 2019 eine limitierte Sonderausgabe, die nur in 500 Exemplaren erschien. Jedes Exemplar ist nummeriert und von den Autoren signiert. Der Verlag beschreibt sie als hochwertige Buchbinderarbeit, die zwei Bücher zu einem großen Band verbindet, auf dem Foto sieht man einen rosafarbenen und einen grünen Buchblock. Auch der Preis liegt höher, er beträgt 149 € statt 48 €.</p>
+<p>Beim Inhalt unterscheiden sich beide Ausgaben nach den Angaben des Verlags nicht: Beide haben 384 Seiten im selben Format, dazu die Jagdgeschichten und die Landschaftsfotografie. Der Verlag nennt 44 Wildrezepte, in den Rezeptlisten meiner normalen Ausgabe stehen 64 Einträge. Meine Rezension beschreibt die normale Ausgabe.</p>
+</aside>
+
+<h2 class="heading" id="der-jaga">
+  Der Jaga
+  <a class="anchor" href="#der-jaga">#</a>
+</h2>
+<p>Der Jagdteil beginnt mit einer Einleitung zum heutigen Bild der Jagd und einem Porträt von Burgstaller und seinem jungen Schweißhund Egon. Danach folgen zehn Kapitel zu den Wildgattungen, von den Raufußhühnern über Stockente, Fasan, Feldhase, Reh-, Rot-, Gams- und Schwarzwild bis zu Murmeltier und Steinwild.</p>
+<p>Jede Wildart bekommt einen Steckbrief mit Gewicht, Vermehrung und Lebenserwartung, eine Karte der Verbreitung, einen Jahreskreis und die Monate, in denen es frisches Wildbret gibt. Dazu kommen Abschnitte zu Lebensart, Bejagung und Beobachtung. Fachbegriffe wie das Fiepen werden am Rand erklärt, sodass auch Leser ohne Jagdschein gut mitkommen. Gestolpert bin ich als Jäger nirgends. Dass der Rehbock in der Brunft stumm bleibt, deckt sich mit meiner Erfahrung: Laut wird er nur, wenn er gestört wird oder beim Blatten merkt, dass keine Ricke auf ihn wartet, dann springt er schreckend ab.</p>
+<p>Die Streckenzahlen stammen aus Österreich, und manches ist von dort aus gedacht. Die Regeln passen auch bei uns, die Lage im Revier nicht immer. Vom Überhandnehmen bei Reh-, Rot- oder Schwarzwild sind wir nicht betroffen: Wir jagen in einem reinen Niederwildrevier mit wenig Wald und einem stabilen Rehwildbestand. Hier ist der Verkehr mit seinen Wildunfällen teils das größere Problem als der Verbiss.</p>
+<p>Im zweiten Abschnitt, der Pirsch, nehmen die beiden Autoren mit auf Reh-, Rotwild-, Niederwild- und Gamsjagd. Jäger und Koch kommentieren sich dabei gegenseitig in kurzen Interview-Auszügen, oft mit Humor. Bei Paul Bocuses Hasenrezept diskutieren sie etwa, ob man die Fellfarbe überhaupt schmeckt.</p>
+<h2 class="heading" id="der-koch">
+  Der Koch
+  <a class="anchor" href="#der-koch">#</a>
+</h2>
+<p>Obauer gibt sein Wissen darüber weiter, wie man Wild fein zubereitet, und verarbeitet dabei, was er im Revier sammelt: Kräuter, Beeren, Pilze, Baumtriebe und sogar Flechten. Die 64 Einträge in den Rezeptlisten sind nach Wildarten sortiert: Federwild, Feldhasen und Kaninchen, Rehwild, Rotwild, Gamswild, Schwarzwild, „Wild vermischt“ und ein süßes Finale. Darunter sind auch Grundrezepte wie die Feuerpaste oder das Schwarzbeerbrot.</p>
+<p>Das sind in meinen Augen eher Sterne- als Alltagsrezepte. Gamsragout mit frittierten Flechten oder Wildsaufilet im Heu kocht man nicht mal eben nach Feierabend. Auch die vielen Innereien wie Rehbeuschel, Hirschherz oder Gamsleber werden bei mir keine Stammgerichte, da habe ich eine Sperre. Innereien nutze ich lieber zum Ludern, um überzählige Füchse anzulocken.</p>
+<p>Die Idee der Verwertung ist trotzdem stimmig, und sie geht über die Küche hinaus: Burgstaller zerwirkt nach Möglichkeit direkt im Revier und lässt den Rest bewusst für Adler, Raben und Füchse liegen.</p>
+<p>Zu Weihnachten soll es bei uns den ersten selbst erlegten Rehrücken geben. Mit der jetzt startenden Jagdsaison möchte ich auch eigene Entenbrust und Hase probieren.</p>
+<h2 class="heading" id="die-fotos">
+  Die Fotos
+  <a class="anchor" href="#die-fotos">#</a>
+</h2>
+<p>Die Fotos stammen von Armin Walcher, die Schwarz-Weiß-Bilder bei den Wildgattungen von Burgstaller selbst. Mich spricht dieser Stil total an, weil er vor allem echt wirkt. Nichts sieht gestellt oder aufgebauscht aus, auch der Erfolg wird nicht betont. Es sind Szenen aus dem Moment, stimmig festgehalten.</p>
+<p>Genau solche Bilder von der Jagd würde ich selbst gerne machen. Allerdings wird die Kamera dort oft ungern gesehen oder belächelt.</p>
+<h2 class="heading" id="fazit">
+  Fazit
+  <a class="anchor" href="#fazit">#</a>
+</h2>
+<p>Besonders gefallen hat mir, dass nichts beschönigt, verheimlicht oder besonders schlimm betont wird. Das Buch berichtet offen, ehrlich und herzlich über Wild, Natur, Jagd und das Kochen mit dem Wildbret.</p>
+<p>Wer nur etwas über die Jagd oder die Natur erfahren möchte, dem werden die Interviews mit dem Koch und der Küchenteil vermutlich wenig bringen. Wer für beides offen ist, ist hier wirklich perfekt bedient.</p>
+<p>Zu <a href="https://www.regetskcob.de/blog/unser-wild/">Unser Wild</a>
+ ist es die perfekte Fortsetzung: Mit den Jagdformen, den Rezepten und den Interview-Auszügen erweitert es das Buch um den Blick über den Tellerrand 🙂. Mit <a href="https://www.regetskcob.de/blog/wild-wald-genuss-vom-kochen-und-jagen/">Wild, Wald, Genuss</a>
+ lässt es sich dagegen kaum vergleichen, das ist ein anderes Level von Buch.</p>
+<p>Die 48 € sind es absolut wert, ich hätte auch 65 € bezahlt wie für den Bildband „Waidwerk“.</p>
+]]></content:encoded>
+      <media:content url="https://www.regetskcob.de/blog/der-jaga-und-der-koch/cover_hu_f6ff231fd8be1e19.jpg" medium="image" type="image/jpeg" />
+    </item><item>
+      <title>📚 | Der Alpenwald</title>
+      <link>https://www.regetskcob.de/blog/der-alpenwald/</link>
+      <pubDate>Mon, 19 Oct 2026 19:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.regetskcob.de/blog/der-alpenwald/</guid>
+      <dc:creator>Daniel Bocksteger</dc:creator>
+      <category>Bücher</category>
+      <category>Natur</category>
+      <description>Ein großer Bildband aus dem Benevento Verlag beschreibt den Wald der Alpen als Lebensraum, Rohstoff und Rückzugsort, aus den Blickwinkeln von Fachleuten und mit …</description>
+      <content:encoded><![CDATA[<p>Der Wald begegnet mir auf vielen Wegen, beim Fotografieren, beim Wandern und im Revier. „Der Alpenwald“ aus dem Benevento Verlag zeigt, wie viel in einem Wald steckt, wenn Fachleute aus ganz verschiedenen Richtungen ihn beschreiben.</p>
+<h2 class="heading" id="das-buch">
+  Das Buch
+  <a class="anchor" href="#das-buch">#</a>
+</h2>
+<p>Eduard Hochbichler ist Forstwissenschaftler am Institut für Waldbau der Universität für Bodenkultur in Wien. Gemeinsam mit gut einem Dutzend weiterer Fachleute hat er den Wald der Alpen beschrieben. Beteiligt waren unter anderem Michael Köhlmeier, Klaus Hackländer, Othmar Pruckner und Maximilian Moser, die Redaktion lag bei Werner Meisinger, der auch an <a href="https://www.regetskcob.de/blog/unser-wild/">Unser Wild</a>
+ beteiligt war.</p>
+<p>Das Buch erschien am 17. November 2022 im Benevento Verlag. Es ist ein großformatiger Band mit festem Einband in Holzoptik, hat 408 Seiten im Format 21,5 × 32 cm und kostet 78 €. Für seine Gestaltung gab es 2023 einen Red Dot Award in der Kategorie Brands &amp; Communication Design. Gestaltet hat es das Salzburger Studio <a href="https://wirsindartisten.com/projekte/der-alpenwald/" target="_blank" rel="noopener">wir sind artisten</a>
+. Die Bildredaktion übernahm der Landschaftsfotograf <a href="https://www.instagram.com/georg_kukuvec_photography/" target="_blank" rel="noopener">Georg Kukuvec</a>
+, die Illustrationen stammen von Lisa Mattanovich und Marius Nechvile vom Wiener Architekturbüro <a href="https://www.nema-ao.com" target="_blank" rel="noopener">nema</a>
+.</p>
+<h2 class="heading" id="inhalt">
+  Inhalt
+  <a class="anchor" href="#inhalt">#</a>
+</h2>
+<p>Der Untertitel „Von Bäumen, Mensch und Tier: der Reichtum des Waldes“ beschreibt die Richtung. Das Buch betrachtet den Alpenwald aus 20 Perspektiven, als Lebensraum, als Rohstoff und als Rückzugsort. Es geht um das Waldklima, um Pflanzen und Tiere, um Nationalparks und um die Holzwirtschaft, und auch um die Geheimnisse des Bergwalds.</p>
+<p>Dazu kommen die Menschen und das Handwerk. Das Buch erzählt von traditionellen Berufen wie dem Köhlern und dem Instrumentenbau, von moderner Architektur mit Holz aus den Alpen und von nachhaltiger Forstwirtschaft. Michael Köhlmeier schließt den Band mit einer persönlichen Erzählung.</p>
+<p>Fotos und Karten begleiten die Texte durchgehend. Die Besprechungen beschreiben es als Geschenkband für Wissenshungrige und Naturfreunde, der Wissen über den Wald vermittelt und zeigt, welche Schätze der Alpenraum bereithält und warum es sich lohnt, sie zu bewahren.</p>
+<h2 class="heading" id="mein-eindruck">
+  Mein Eindruck
+  <a class="anchor" href="#mein-eindruck">#</a>
+</h2>
+<p>Für mich als Flachländler ist die Vielfalt, die dieses Buch zeigt, überwältigend. Das gilt für die Landschaft der Alpen und die Kulturen im Alpenraum, für die Kulturlandschaft und deren Bewirtschaftung und für die Tiere und Pflanzen, die dort leben und wachsen. Ich blättere immer wieder darin, entdecke Neues und bin jedes Mal begeistert.</p>
+<p>Hängen bleibe ich oft bei den Karten und Grafiken. Eine Doppelseite zeigt die Baumarten des Alpenwalds als Silhouetten, und die Fichte allein steht für knapp die Hälfte, Buche und Tanne folgen mit großem Abstand. Eine Karte im Kapitel „Natur unter Schutz“ zeigt, dass etwa ein Viertel der Alpenregion als Schutzgebiet ausgewiesen ist, darunter 13 Nationalparks. Der deutsche Anteil an dieser Fläche liegt bei knapp drei Prozent. So aufbereitet liest man auch Zahlen gern.</p>
+<p>Im Kapitel über die Pecher, die Harz aus Schwarzföhren gewinnen, wird ein Baum mit einem Kirchturm verglichen. Der Statiker berechnet den Turm einmal, der Baum dagegen baut sein Stützmaterial Tag für Tag neu und passt sich an Schnee, Sturm und sein eigenes Gewicht an. Das Bild gefällt mir, gerade weil ich beruflich selbst eher in Iterationen als in fertigen Plänen denke.</p>
+<h3 class="heading" id="wild-und-jagd">
+  Wild und Jagd
+  <a class="anchor" href="#wild-und-jagd">#</a>
+</h3>
+<p>Als Jäger lese ich die Kapitel über Wild und Jagd besonders aufmerksam. Das Buch beschönigt dabei wenig. Der Wald wird als Konfliktzone beschrieben, in der Holzwirtschaft, Jägerschaft und Tierschutz verschiedene Interessen verfolgen. Etwa 20 Prozent der Bäume sind durch Wildverbiss geschädigt, und mit Bär und Wolf kehren die großen Beutegreifer zurück. Der Abschnitt über den Rothirsch erklärt, dass er ursprünglich aus der halboffenen Landschaft stammt und erst durch den Menschen in den Wald gedrängt wurde, und warum mehr Jagddruck das Problem oft nur verlagert. Ansätze wie die Intervallbejagung auf Freiflächen und Ruhezonen im Rotwildlebensraum finde ich spannend.</p>
+<p>Für jemanden aus dem Flachland ist die Jagd im Bergwald eine eigene Welt. Schussschneisen müssen erst angelegt werden, die Gams steigt wegen der Wärme in den Wald ab, und ein Hirsch mit 120 Kilogramm will über steile Hänge bis zur nächsten Forststraße gebracht werden. Werner Meisinger zählt das ausdrücklich nicht zur Jagdromantik. Die Bilder dazu stammen vom Salzburger Berufsjäger und Wildtierfotografen Christoph Burgstaller, und sie zeigen genau diese Mühe im Schnee.</p>
+<h3 class="heading" id="zwischen-den-kapiteln">
+  Zwischen den Kapiteln
+  <a class="anchor" href="#zwischen-den-kapiteln">#</a>
+</h3>
+<p>Schmunzeln musste ich bei einem Satz über gestresste Menschen, die im Wald ganz abschalten wollen und am Ende doch den Erlebnispfad suchen. Ganz frei davon bin ich auch nicht. Den Abschluss macht Michael Köhlmeier mit einer Erzählung, die bei seiner Kindheitsangst vor dem engen, finsteren Tannenwald beginnt und beim „Tännelehonig“ landet. Nach so viel Fachwissen ist das ein schöner, persönlicher Ausklang.</p>
+<p>Als Leser:in sehnt man sich schon nach wenigen Seiten nach draußen, in die heimische Kulturlandschaft und ganz besonders in die Alpen.</p>
+<h2 class="heading" id="fazit">
+  Fazit
+  <a class="anchor" href="#fazit">#</a>
+</h2>
+<p>Wer den Wald liebt und mehr über ihn wissen möchte, bekommt hier einen Band, den man zum Blättern und zum Nachschlagen in die Hand nimmt. Fachwissen und schöne Bilder gehören dabei zusammen.</p>
+]]></content:encoded>
+      <media:content url="https://www.regetskcob.de/blog/der-alpenwald/cover_hu_565a0489e85272ee.jpg" medium="image" type="image/jpeg" />
+    </item><item>
+      <title>🔭 | Bau des OpenAstroTracker - Teil II</title>
+      <link>https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/</link>
+      <pubDate>Sun, 18 Oct 2026 17:30:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/</guid>
+      <dc:creator>Daniel Bocksteger</dc:creator>
+      <category>Fotografie</category>
+      <description>Aus den gedruckten Teilen wird ein Tracker: Gewindeeinsätze, Steuerplatine, Verkabelung, Raspberry Pi und die erste Kamera auf der Montierung. Was beim …</description>
+      <content:encoded><![CDATA[<p>Seit <a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-i/">Teil I</a>
+ ist einiges passiert: Der Drucker hat die letzten Teile ausgespuckt, und zwischen den Jahren ging es an den Zusammenbau. Aus einem Haufen weißer und schwarzer Kunststoffteile wurde in vier Wochen ein Tracker, der inzwischen fertig auf dem Teppich steht und auf einen klaren Himmel wartet.</p>
+<h2 class="heading" id="gewindeeinsätze-setzen">
+  Gewindeeinsätze setzen
+  <a class="anchor" href="#gewindeeins%c3%a4tze-setzen">#</a>
+</h2>
+<p>Bevor sich die gedruckten Teile verschrauben lassen, brauchen sie Gewinde. Dafür kommen Messing-Einsätze in den Kunststoff, die ich mit einem Lötkolben einschmelze. Damit das gerade und senkrecht klappt, steckt der Kolben bei mir in einem gedruckten Bohrständer, und die Bauanleitung läuft parallel auf dem Laptop.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/einsaetze-setzen_hu_ac743e53eedbd54e.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 24 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/82 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;200&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Ein Lötkolben im orangen Ständer setzt Messing-Gewindeeinsätze in das weiße Speichenrad, daneben der Laptop mit der Bauanleitung"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/einsaetze-setzen_hu_c7b7e5d19c8db73c.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+</p>
+<p>Die Einsätze sitzen nach ein paar Sekunden fest. Wichtig ist, nicht zu viel Druck auszuüben und den Kolben gerade zu halten, sonst schmilzt das Material schief.</p>
+<div class="image-row"><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/gehaeuse-einsaetze_hu_205a5eb4278bde39.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 24 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/50 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;200&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Der Lötkolben setzt die Einsätze in die Unterseite des schwarzen Gehäuses"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/gehaeuse-einsaetze_hu_5c98618a41a9fed9.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+
+<figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/gehaeuse-platte_hu_52a2872e5f5a8032.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 24 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/50 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;250&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Die fertige Gehäuseplatte mit allen Messing-Einsätzen und einer Aussparung"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/gehaeuse-platte_hu_b88a029348ad3f9d.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure></div>
+
+<h2 class="heading" id="die-steuerplatine">
+  Die Steuerplatine
+  <a class="anchor" href="#die-steuerplatine">#</a>
+</h2>
+<p>Kurz nach Weihnachten kam die Steuerplatine an. Sie bekommt die Treiber für die Schrittmotoren und wird per USB mit dem Rechner verbunden, um die Firmware aufzuspielen. Während auf einem Laptop die Anleitung lief, habe ich auf dem anderen die Platine eingerichtet.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/steuerplatine_hu_c96c0647226641b2.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 24 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/121 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;64&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Die Steuerplatine mit zwei blauen Treibermodulen liegt auf Luftpolsterfolie, dahinter zwei Laptops mit Anleitung und Software"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/steuerplatine_hu_4d19a67c1fa155ba.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+</p>
+<h2 class="heading" id="zwischendurch-gedruckt">
+  Zwischendurch gedruckt
+  <a class="anchor" href="#zwischendurch-gedruckt">#</a>
+</h2>
+<p>Auch während des Zusammenbaus lief der Drucker weiter. Ein Halter wanderte zuerst in ein CAD-Programm, damit ich ihn mir von allen Seiten ansehen konnte, und von dort in den Slicer für den P1S.</p>
+<div class="image-row"><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/cad-halter_hu_2be21a1207303574.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 2.22mm f/2.2&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/2,2&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;2,2 mm (KB-Äquivalent 28 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/64 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;80&#34;}]"><div class="img-container" style="--w: 1125; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Ein Halter mit vier Bohrungen und einem runden Zapfen in der CAD-Ansicht"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/cad-halter_hu_2f12338af8d7a6a5.webp"
+            
+            
+             width="800" height="1422">
+      </div></a>
+</figure>
+
+<figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/slicer-halter_hu_6a6151f7a2f278e3.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 2.22mm f/2.2&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/2,2&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;2,2 mm (KB-Äquivalent 28 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/51 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;1600&#34;}]"><div class="img-container" style="--w: 2000; --h: 1125;">
+        <img loading="lazy" decoding="async"
+             alt="Derselbe Halter im Slicer auf der Druckplatte"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/slicer-halter_hu_a52cacc951442e95.webp"
+            
+            
+             width="1600" height="900">
+      </div></a>
+</figure></div>
+
+<p>Die hellen Teile, die in Teil I noch auf dem Drucktisch lagen, sind inzwischen ein Ensemble aus Bögen, Armen und kleinen Verbindern. So langsam erkennt man, wie daraus später die Montierung wird.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/weisse-teile_hu_b56955af23847432.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 48 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/50 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;64&#34;}]"><div class="img-container" style="--w: 2000; --h: 1500;">
+        <img loading="lazy" decoding="async"
+             alt="Weiße gedruckte Teile auf grauem Grund: ein langer Arm mit gebogenen Enden, ein Würfel, ein Verbinder und kleine Scheiben"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/weisse-teile_hu_c2c6c4ba484eca9d.webp"
+            
+            
+             width="1600" height="1200">
+      </div></a>
+</figure>
+</p>
+<h2 class="heading" id="verkabelung">
+  Verkabelung
+  <a class="anchor" href="#verkabelung">#</a>
+</h2>
+<p>Das Herz des Trackers sitzt im schwarzen Gehäuse. Dort liegt die Platine, von der Kabel zu den Motoren, zum Display und zu den Sensoren laufen. Die Reihenfolge, in der die Stecker auf die Platine gehören, steht in der Anleitung. Ich habe sie mir ausgedruckt und beim Stecken abgehakt, denn bei dieser Menge an Kabeln geht schnell etwas durcheinander.</p>
+<div class="image-row"><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/platine-im-gehaeuse_hu_449567368d3ed219.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 54 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/50 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;100&#34;}]"><div class="img-container" style="--w: 1125; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Die Steuerplatine liegt im geöffneten Gehäuse, davor ein buntes Flachbandkabel und lose Steckerleisten"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/platine-im-gehaeuse_hu_a6b43d427b260743.webp"
+            
+            
+             width="800" height="1422">
+      </div></a>
+</figure>
+
+<figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/verkabelung-detail_hu_fb67147b6e8e30bb.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 2.22mm f/2.2&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/2,2&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;2,2 mm (KB-Äquivalent 49 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/33 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;400&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Nahaufnahme der Platine mit Flachbandkabel, farbigen Steckern für die Motoren und bunten Kabeln"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/verkabelung-detail_hu_d6e6973e38a93e32.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure></div>
+
+<h2 class="heading" id="raspberry-pi-und-gehäuse">
+  Raspberry Pi und Gehäuse
+  <a class="anchor" href="#raspberry-pi-und-geh%c3%a4use">#</a>
+</h2>
+<p>Anfang Januar zog der Raspberry Pi ins Gehäuse ein, daneben ein GPS-Modul. Der Pi steuert später die Aufnahmen, das GPS liefert dem Tracker Uhrzeit und Standort. Vorne sitzt die Handbox, über die sich der Tracker auch ohne Rechner bedienen lässt.</p>
+<div class="image-row"><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/raspberry-gehaeuse_hu_fa6458e01276d09c.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 48 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/100 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;64&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Das schwarze, spitz zulaufende Gehäuse von oben: Raspberry Pi, Platine, Flachbandkabel und GPS-Modul sind verbaut, vorne die Handbox"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/raspberry-gehaeuse_hu_a0c7a260e6fd46f1.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+
+<figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/raspberry-seitenansicht_hu_2ef0f5b37642723d.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 48 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/100 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;100&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Das Gehäuse von der Seite, im Inneren Raspberry Pi und Platine mit bunten Kabeln"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/raspberry-seitenansicht_hu_c5f1ae302b7b6f0e.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure></div>
+
+<p>Am nächsten Tag wurde es ordentlicher. Die Kabel liegen jetzt sauber an den Wänden, und der erste Strom floss: An der Platine leuchten rote LEDs, ein gutes Zeichen.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/verdrahtung-seite_hu_a1b377218654b4ab.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 2.22mm f/2.2&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/2,2&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;2,2 mm (KB-Äquivalent 24 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/60 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;640&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Seitenansicht des Gehäuses, im Inneren geordnete Kabel und rot leuchtende LEDs an der Platine"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/verdrahtung-seite_hu_bc39156e3c5c34a6.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+</p>
+<p>Einen Tag später hing die Handbox mit ihrem Display am Gerät. Mit Zwingen fixiert und dem ausgedruckten Schaltplan daneben ging es an die letzten Verbindungen, zum Beispiel für den Hall-Sensor, mit dem sich der Tracker selbständig in die Ausgangsposition fährt.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/handbox-schaltplan_hu_98a86b8f2cc74ff1.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 48 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/50 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;64&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Das Gehäuse mit angeschlossener Handbox, mit Zwingen gehalten, davor ein ausgedruckter Schaltplan der Platine"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/handbox-schaltplan_hu_eaee3f370a6d3f13.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+</p>
+<h2 class="heading" id="kamera-und-software">
+  Kamera und Software
+  <a class="anchor" href="#kamera-und-software">#</a>
+</h2>
+<p>Am 8. Januar saß die Mechanik: Das große weiße Rad sitzt in der Achse, der Riemen läuft, und am Alu-Profil hängt das erste Objektiv samt Leitrohr. Die Optik, die ich später für Aufnahmen nutzen möchte, trägt eine Bahtinov-Maske, mit der sich der Fokus auf Sterne sauber einstellen lässt.</p>
+<div class="image-row"><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/kamera-montiert_hu_9bf8c53f0dbcc6cd.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 48 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/100 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;125&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Die Mechanik des Trackers: weißes Speichenrad, schwarzer Bogen mit der Aufschrift OpenAstroTracker und ein Objektiv auf dem Alu-Profil"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/kamera-montiert_hu_470bdf30376f70a3.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+
+<figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/bahtinov-leitrohr_hu_2e2a96a67c114c44.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 6.765mm f/1.78&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/1,8&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;6,8 mm (KB-Äquivalent 24 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/36 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;500&#34;}]"><div class="img-container" style="--w: 2000; --h: 1500;">
+        <img loading="lazy" decoding="async"
+             alt="Blick von vorn auf die Kamera mit Bahtinov-Maske und das schwarze Leitrohr auf dem Alu-Profil"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/bahtinov-leitrohr_hu_b8eca4def5d8e31a.webp"
+            
+            
+             width="1600" height="1200">
+      </div></a>
+</figure></div>
+
+<p>Die Software läuft auf dem Raspberry Pi. Ich habe mich für StellarMate OS entschieden. Vom Schreibtisch aus kann ich per Display, Tastatur und Maus alles einrichten, ohne dass der Tracker draußen im Dunkeln stehen muss.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/stellarmate_hu_a501dd8cf4d867a8.webp" data-lightbox data-exif="[{&#34;label&#34;:&#34;Kamera&#34;,&#34;value&#34;:&#34;Apple iPhone 16 Pro&#34;},{&#34;label&#34;:&#34;Objektiv&#34;,&#34;value&#34;:&#34;iPhone 16 Pro back triple camera 2.22mm f/2.2&#34;},{&#34;label&#34;:&#34;Blende&#34;,&#34;value&#34;:&#34;f/2,2&#34;},{&#34;label&#34;:&#34;Brennweite&#34;,&#34;value&#34;:&#34;2,2 mm (KB-Äquivalent 14 mm)&#34;},{&#34;label&#34;:&#34;Verschlusszeit&#34;,&#34;value&#34;:&#34;1/30 s&#34;},{&#34;label&#34;:&#34;ISO&#34;,&#34;value&#34;:&#34;100&#34;}]"><div class="img-container" style="--w: 1500; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Der Tracker mit offenem Gehäuse auf dem Schreibtisch, rechts ein Display mit StellarMate OS auf einem flexiblen Stativ, davor Tastatur und Maus"
+             src="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/stellarmate_hu_ba5709ba32f4c093.webp"
+            
+            
+             width="1200" height="1600">
+      </div></a>
+</figure>
+</p>
+<h2 class="heading" id="stand-ende-januar">
+  Stand Ende Januar
+  <a class="anchor" href="#stand-ende-januar">#</a>
+</h2>
+<p>Ende Januar steht der Tracker komplett aufgebaut da. Es fehlt nur noch, was man nicht planen kann: ein klarer Himmel. Sobald das Wetter mitspielt, geht es hinaus, und dann wird sich zeigen, wie gut er nachführt.</p>
+]]></content:encoded>
+      <media:content url="https://www.regetskcob.de/blog/bau-des-openastrotracker-teil-ii/cover_hu_dffa95adde20e01e.jpg" medium="image" type="image/jpeg" />
+    </item><item>
+      <title>📚 | Drohnen – Die große Fotoschule</title>
+      <link>https://www.regetskcob.de/blog/drohnen-die-grosse-fotoschule/</link>
+      <pubDate>Sun, 18 Oct 2026 17:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.regetskcob.de/blog/drohnen-die-grosse-fotoschule/</guid>
+      <dc:creator>Daniel Bocksteger</dc:creator>
+      <category>Bücher</category>
+      <category>Fotografie</category>
+      <description>Sabrina Herrmann und Francis Markert erklären im Rheinwerk-Buch, wie man mit Drohnen fotografiert und filmt.</description>
+      <content:encoded><![CDATA[<p>Die Drohne gehört bei mir zur Ausrüstung, seit ich Felder und Dörfer von oben fotografieren möchte, am liebsten früh am Morgen im Nebel. Im Frühjahr kommt die Kitzrettung dazu, bei der die Drohne mit Wärmebildkamera nach Rehkitzen in den Wiesen sucht. Wer fliegt, braucht neben der Technik ein Auge für Bildaufbau und Licht, und dazu das Wissen um die Regeln. „Drohnen – Die große Fotoschule“ von Sabrina Herrmann und Francis Markert will genau das in einem Buch liefern.</p>
+<h2 class="heading" id="das-buch">
+  Das Buch
+  <a class="anchor" href="#das-buch">#</a>
+</h2>
+<p>Die 1. Auflage erschien im Rheinwerk Verlag, ist gebunden und hat 319 Seiten. Der Preis lag bei 49,90 €. Das Buch richtet sich an alle, die mit einer Drohne fotografieren und filmen wollen, vom Modellkauf über die ersten Flüge bis zu den kreativen Möglichkeiten der Vogelperspektive. Dazu gehören alle wichtigen Hinweise zu den EU-Drohnenregeln, damit man sicher fliegt.</p>
+<aside class="nachtrag">
+  <figure class="nachtrag-image">
+    <img src="https://www.regetskcob.de/blog/drohnen-die-grosse-fotoschule/auflage-2_hu_1219182e2567349e.webp" width="260" height="199" alt="Das Buch „Drohnen – Die große Fotoschule“ in der 2., aktualisierten und überarbeiteten Auflage, Cover mit Luftbildern, einer Drohne und dem Rheinwerk-Logo" loading="lazy" decoding="async">
+    <figcaption>Cover: Rheinwerk Verlag</figcaption>
+  </figure>
+  <p class="nachtrag-label">Neue Auflage</p><p>Meine Rezension beschreibt die 1. Auflage. Im Laufe des Jahres 2026 ist eine 2., aktualisierte und überarbeitete Auflage erschienen.</p>
+<p>Das ist bei diesem Thema mehr als eine Formsache, denn die Gesetzgebung rund um Drohnen verändert sich regelmäßig. Betriebskategorien, Registrierung, Fluggebiete und Versicherungspflichten werden angepasst, und ein gedrucktes Buch kann immer nur den Stand zum Redaktionsschluss zeigen. Wer das Rechtskapitel liest, sollte deshalb zusätzlich die aktuellen Vorgaben der Behörden prüfen und vor jedem Flug die Regeln für den Flugort nachsehen.</p>
+</aside>
+
+<h2 class="heading" id="inhalt">
+  Inhalt
+  <a class="anchor" href="#inhalt">#</a>
+</h2>
+<p>Los geht es mit der Drohne selbst. „Die fliegende Kamera“ erklärt, wie Foto-Drohnen aufgekommen sind, welche Bauformen taugen und wie ein Multicopter funktioniert, von der Steuerung über stabile Aufnahmen bis zum Umgang mit den Akkus. Danach folgt die Frage, welche Drohne zu einem passt, mit Gewicht, Budget und den Anforderungen an die Kamera.</p>
+<p>In „Die ersten eigenen Flüge“ geht es um alles, was vor dem Start zu klären ist, von der Versicherung über die Registrierung als Betreiber bis zu Flugort und Failsafe, und um die ersten Flugübungen bis hin zum Training am Simulator. „Herausfordernde Flugbedingungen“ behandelt Wind und Wetter, das Fliegen im Winter, von einem Boot oder an Wasserfällen, und was man tut, wenn der Sichtkontakt abreißt oder die Drohne davonfliegt.</p>
+<p>Dann wird es kreativ. „Neue Perspektiven entdecken“ beginnt mit der Planung von Luftaufnahmen und dem richtigen Timing, Goldene und Blaue Stunde eingeschlossen, und führt über Bildaufbau und Belichtung bis zu Filtern und dem Blick nach unten. Die „Fototechniken für Profis“ zeigen Panoramen, Zeitraffer, HDR und Langzeitbelichtungen. Danach geht es um Drohnenvideos: Planung, Kameraeinstellungen und Flugmanöver, die sich auch automatisieren lassen. 360°-Drohnen tauchen dabei an mehreren Stellen auf.</p>
+<p>Das Rechtskapitel ist eines der gründlichsten. Es erklärt die europäischen Regeln mit ihren Betriebskategorien und das deutsche Luftrecht mit den geografischen UAS-Gebieten, dem Luftraum, den Zuständigkeiten und der Versicherung, dazu das Medienrecht mit Persönlichkeitsrecht, Datenschutz und Urheberrecht.</p>
+<p>Es folgen ein Kapitel zum Verreisen mit der Drohne und eines zum beruflichen Einsatz: Gewerbliche Luftbildfotografie, Thermografie, Photogrammetrie, Anwendungen in der Industrie, ein Exkurs zum Rettungswesen und der Einsatz in Forst- und Landwirtschaft, wo auch die Rehkitzrettung ihren eigenen Abschnitt hat. Den Schluss bilden die Missionsplanung, ein Glossar und ein Index.</p>
+<h2 class="heading" id="fazit">
+  Fazit
+  <a class="anchor" href="#fazit">#</a>
+</h2>
+<p>Das Buch verbindet Technik, Recht und Bildgestaltung, und das ist bei Drohnen die richtige Mischung. Für Einsteiger ist es ein Begleiter durch die ersten Flüge, für alle, die schon fliegen, eine Quelle für neue Perspektiven. Die Detailtreue im rechtlichen Teil macht es außerdem zu einer guten Prüfungsvorbereitung für die Fernpiloten-Nachweise.</p>
+<p>Für mich war das Buch vor allem beim Recht eine Hilfe. Im Frühjahr bin ich für die Kitzrettung unterwegs, und das Buch hat mein rechtliches Verständnis noch einmal gefestigt. Das gibt mir Sicherheit bei der Planung, sowohl bei Fotoflügen als auch bei Rettungsflügen.</p>
+<aside class="nachtrag">
+  <figure class="nachtrag-image">
+    <img src="https://www.regetskcob.de/blog/drohnen-die-grosse-fotoschule/fotografieren-mit-drohnen_hu_5537fd25aa15947d.webp" width="260" height="199" alt="Das Buch „Fotografieren mit Drohnen“, Cover mit Luftbildern von Nebel, Booten und einem Auto im Wald und dem Rheinwerk-Logo" loading="lazy" decoding="async">
+    <figcaption>Cover: Rheinwerk Verlag</figcaption>
+  </figure>
+  <p class="nachtrag-label">Ein zweites Buch</p><p>Zusätzlich hat mir der Rheinwerk Verlag „Fotografieren mit Drohnen“ zur Verfügung gestellt. Es legt den Fokus deutlich stärker auf die Kreativität als auf die Grundlagen und die rechtlichen Aspekte. Wer die Basics schon beherrscht und vor allem Inspiration für eindrucksvolle Bilder aus der Luft sucht, findet dort mehr.</p>
+</aside>
+
+]]></content:encoded>
+      <media:content url="https://www.regetskcob.de/blog/drohnen-die-grosse-fotoschule/cover_hu_64b47d3ad8764817.jpg" medium="image" type="image/jpeg" />
+    </item><item>
+      <title>📸 | Raus aufs Land: Die Gegend neu sehen</title>
+      <link>https://www.regetskcob.de/blog/raus-aufs-land-die-gegend-neu-sehen/</link>
+      <pubDate>Tue, 06 Oct 2026 12:00:00 +0200</pubDate>
+      <guid isPermaLink="true">https://www.regetskcob.de/blog/raus-aufs-land-die-gegend-neu-sehen/</guid>
+      <dc:creator>Daniel Bocksteger</dc:creator>
+      <category>Fotografie</category>
+      <category>Natur</category>
+      <category>Jagd</category>
+      <description>In einer Stadt aufgewachsen, vor einigen Jahren aufs Land gezogen: Wie Kamera, Drohne und Jagdschein den Blick auf die Landschaft am Niederrhein verändert …</description>
+      <content:encoded><![CDATA[<p>Es ist früh am Morgen, und über den Feldern liegt noch Nebel. Ein paar Baumreihen ragen heraus, irgendwo dreht sich leise ein Windrad. Ich stehe am Wegrand, die Kamera in der Hand, und merke, wie still es ist. Vor einigen Jahren hätte ich diesen Moment nicht einmal bemerkt.</p>
+<h2 class="heading" id="aufgewachsen-in-der-stadt">
+  Aufgewachsen in der Stadt
+  <a class="anchor" href="#aufgewachsen-in-der-stadt">#</a>
+</h2>
+<p>Ich bin in einer Stadt mit rund 40.000 Einwohnern aufgewachsen. Eine Großstadt war das nicht, ländlich aber auch kaum. Felder, Wiesen und Wälder besuchte man, wenn überhaupt, am Wochenende, vor der Haustür lagen sie nicht. Vor einigen Jahren bin ich aufs Land gezogen, und seitdem schätze ich es mehr, als ich es mir vorher je hätte vorstellen können.</p>
+<p>Auf den ersten Blick wirkt der Niederrhein unspektakulär. Es gibt keine Berge und keine Küste, keine Aussichtspunkte, für die jemand einen Umweg fahren würde. Flaches Land, Felder, Deiche, Baumreihen am Horizont. Genau dort hat sich bei mir etwas verändert.</p>
+<h2 class="heading" id="die-kamera-verändert-den-blick">
+  Die Kamera verändert den Blick
+  <a class="anchor" href="#die-kamera-ver%c3%a4ndert-den-blick">#</a>
+</h2>
+<p>Mit einer Kamera in der Hand sieht man anders. Sie gibt einem einen Grund, loszugehen, und einen Grund, genauer hinzusehen. Woher kommt das Licht? Warum steht die Baumreihe genau dort? Was macht der Traktor auf dem Acker, und wie sieht die Wiese aus, wenn man sich hinhockt? Dieselben Wege wirken im Nebel, im Gegenlicht, im Frühling und im Spätsommer jedes Mal anders.</p>
+<p>Ich gehe sie deshalb immer wieder, zu verschiedenen Tages- und Jahreszeiten. Das Land ist ruhig, aber es ist nie dasselbe. Daraus ist die Serie <a href="https://www.regetskcob.de/niederrhein/">Niederrhein.</a>
+ entstanden, eine Sammlung von Bildern, die zeigt, wie viel in dieser Gegend steckt, wenn man sich Zeit nimmt.</p>
+<p><figure class=""><a href="https://www.regetskcob.de/gallery/niederrhein/img-2449_hu_c88ef65eafa95348.webp" data-lightbox><div class="img-container" style="--w: 2000; --h: 1500;">
+        <img loading="lazy" decoding="async"
+             alt="Wiese im Morgendunst, links eine Kopfweide über einem Trampelpfad, die Sonne steht flach hinter den Bäumen"
+             src="https://www.regetskcob.de/gallery/niederrhein/img-2449_hu_c945c983ef6ac86b.webp"
+            
+            
+             width="1600" height="1200">
+      </div></a>
+</figure>
+</p>
+<p>Seitdem ist mein Alltag aufmerksamer geworden. Ich nehme den Dunst über den Wiesen wahr, die Farbe eines Ackers nach dem Pflügen, das Licht, das am Abend flach über die Felder fällt. Die Kamera hat mir beigebracht, das Gewöhnliche anzusehen, und dabei ist es für mich zu etwas Besonderem geworden.</p>
+<h2 class="heading" id="der-jagdschein-schärft-den-blick">
+  Der Jagdschein schärft den Blick
+  <a class="anchor" href="#der-jagdschein-sch%c3%a4rft-den-blick">#</a>
+</h2>
+<p>Dazu kam der Jagdschein, und seitdem fällt mir in der Natur noch einmal deutlich mehr auf als zuvor. Ich sehe, wo Wild Äsung findet und wo es Deckung hat. Ich schaue auf die Felder und weiß, was der Landwirt gerade anbaut. Das hat den Städter in mir nie interessiert. Heute sehe ich Weizen, wo ich früher einfach Gras gesagt hätte.</p>
+<p>Ein Maisfeld ist für mich im Sommer Deckung und nach der Ernte eine offene Fläche, und jedes Feld erzählt etwas über die Jahreszeit. Wer die Landschaft lesen kann, sieht auch mehr Bilder darin.</p>
+<h2 class="heading" id="von-oben-sieht-man-mehr">
+  Von oben sieht man mehr
+  <a class="anchor" href="#von-oben-sieht-man-mehr">#</a>
+</h2>
+<div class="float-image"><figure class=""><a href="https://www.regetskcob.de/gallery/luftbilder/dji-0308_hu_6b1ebb6604d1b7a.webp" data-lightbox><div class="img-container" style="--w: 1600; --h: 2000;">
+        <img loading="lazy" decoding="async"
+             alt="Luftaufnahme einer Ortschaft im Morgennebel, der Kirchturm ragt aus dem Dunst, davor Wiesen und ein gestreifter Acker"
+             src="https://www.regetskcob.de/gallery/luftbilder/dji-0308_hu_b952e248178896c4.webp"
+            
+            
+             width="1600" height="2000">
+      </div></a>
+</figure></div>
+
+<p>Zur Kamera kam die Drohne. Sie zeigt die Gegend aus einer Perspektive, die man zu Fuß nie bekommt. Am liebsten fliege ich früh am Morgen im Nebel: Baumreihen werfen lange Schatten, Kirchtürme ragen aus dem Dunst, Windräder stehen über einem Nebelmeer. Von oben erkennt man Muster, die am Boden verborgen bleiben, die Linien der Äcker, den Verlauf eines Wasserlaufs, die Lage eines Dorfes im Land.</p>
+<p>Das Fliegen bringt auch Verantwortung mit sich, vom Luftraum bis zur Rücksicht auf Menschen und Tiere. Im Frühjahr hilft mir dieselbe Technik bei der Kitzrettung. Die Drohne ist für mich damit ein Werkzeug für Bilder und für etwas Sinnvolles zugleich.</p>
+<h2 class="heading" id="was-ich-daraus-mitnehme">
+  Was ich daraus mitnehme
+  <a class="anchor" href="#was-ich-daraus-mitnehme">#</a>
+</h2>
+<p>Man muss nicht weit reisen, um etwas zu entdecken. Oft reicht der Weg vor der Haustür, wenn man ihn mit anderen Augen ansieht. Wer das ausprobieren möchte, dem helfen ein paar einfache Dinge:</p>
+<ul>
+<li>Geht dieselben Wege immer wieder, zu verschiedenen Tages- und Jahreszeiten</li>
+<li>Steht früh auf, denn Nebel und tiefes Licht gibt es am Morgen und am Abend</li>
+<li>Geht in die Hocke oder legt euch ins Gras, die Perspektive verändert fast jedes Motiv</li>
+<li>Nehmt euch Zeit, ein gutes Bild pro Spaziergang reicht völlig</li>
+<li>Fragt euch, was auf dem Feld wächst und warum, dann wird die Landschaft lesbar</li>
+<li>Eine Kamera ist hilfreich, ein Smartphone genügt aber auch</li>
+</ul>
+<p>Ich bin in einer Stadt aufgewachsen, und heute sind es der Nebel am Morgen, die Baumreihen und die weiten Felder, die mich nach draußen ziehen. Wenn ihr in einer Gegend lebt, die euch auf den ersten Blick wenig zu bieten scheint, nehmt eine Kamera mit und geht los. Ihr werdet überrascht sein, wie viel ihr dort findet.</p>
+]]></content:encoded>
+      <media:content url="https://www.regetskcob.de/blog/raus-aufs-land-die-gegend-neu-sehen/cover_hu_69ec0af5482f939f.jpg" medium="image" type="image/jpeg" />
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Simons Seite</title>
+	<atom:link href="https://smnvdl.de/feed/" rel="self" type="application/rss+xml" />
+	<link>https://smnvdl.de</link>
+	<description>Hier gibt es nichts zu sehen.</description>
+	<lastBuildDate>Tue, 10 Nov 2026 20:12:13 +0000</lastBuildDate>
+	<language>de</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=7.1.4</generator>
+
+<image>
+	<url>https://smnvdl.de/wp-content/uploads/2026/11/Logo_klein.png</url>
+	<title>Simons Seite</title>
+	<link>https://smnvdl.de</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Kamera-Experimente in der Toskana</title>
+		<link>https://smnvdl.de/2026/11/kamera-experimente-in-der-toskana/</link>
+		
+		<dc:creator><![CDATA[Simon]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2026 20:12:13 +0000</pubDate>
+				<category><![CDATA[Fotografie]]></category>
+		<guid isPermaLink="false">https://smnvdl.de/?p=63</guid>
+
+					<description><![CDATA[Im Oktober 2026 haben wir Urlaub in der Toskana gemacht. Im Vorfeld hatte ich das Gefühl, dass ich meine &#8222;gute&#8220; Kamera Zuhause lassen möchte, um stattdessen mit der alten Analog-Kamera (Minolta X-700), der Kodak Charmera und meinem Smartphone zu fotografieren. Sozusagen als Herausforderung, auch mit &#8222;schlechtem&#8220; Equipment möglichst gute Fotos zu machen (im Rahmen der [&#8230;]]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Wie folgt man jemanden, der nicht auf Social Media ist?</title>
+		<link>https://smnvdl.de/2026/11/wie-folgt-man-jemanden-der-nicht-auf-social-media-ist/</link>
+		
+		<dc:creator><![CDATA[Simon]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2026 19:44:26 +0000</pubDate>
+				<category><![CDATA[Digitales]]></category>
+		<guid isPermaLink="false">https://smnvdl.de/?p=137</guid>
+
+					<description><![CDATA[Die schlechte Nachricht am Anfang: Ich empfehle eine weitere App auf eurem Smartphone. Ich weiß, das klingt erst einmal kontraproduktiv, aber ich verspreche euch, dass diese eine App perspektivisch mehrere andere Apps ersetzen kann. Die zugrunde liegende Technik ist nicht neu. Sehr viele (anständige) Webseiten und Blogs kann man über einen sogenannten RSS-Feed abonnieren &#8211; [&#8230;]]]></description>
+		
+		
+		
+			</item>
+		<item>
+		<title>Was soll das hier werden?</title>
+		<link>https://smnvdl.de/2026/11/was-soll-das-hier-werden/</link>
+		
+		<dc:creator><![CDATA[Simon]]></dc:creator>
+		<pubDate>Tue, 10 Nov 2026 19:43:34 +0000</pubDate>
+				<category><![CDATA[Allgemein]]></category>
+		<category><![CDATA[Digitales]]></category>
+		<guid isPermaLink="false">https://smnvdl.de/?p=46</guid>
+
+					<description><![CDATA[Ganz ehrlich: So genau weiß ich es auch (noch) nicht. Ein Experiment. Ich habe keine Lust mehr auf &#8222;soziale&#8220; Medien, auf Instagram, auf Plattformen, die nur noch aus Werbung, KI-Müll und Hass bestehen. Ich möchte meinen Teil dazu beitragen, dass das Internet (wieder) ein freierer und besserer Ort sein kann, in dem nicht wenige große [&#8230;]]]></description>
+		
+		
+		
+			</item>
+	</channel>
+</rss>

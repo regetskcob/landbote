@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Heute widget. Flat like the app: ground, ink, one hairline, no
+     shadow. Colours in values/widget_colors.xml mirror Horizont's tokens. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/kennung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:letterSpacing="0.08"
+        android:textColor="@color/hz_text_muted"
+        android:textSize="11sp"
+        android:text="HEUTE" />
+
+    <TextView
+        android:id="@+id/count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:textColor="@color/hz_accent_text"
+        android:textSize="32sp"
+        android:text="0" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/hz_line" />
+
+    <TextView android:id="@+id/source1" style="@style/WidgetSource" />
+    <TextView android:id="@+id/title1" style="@style/WidgetTitle" />
+    <TextView android:id="@+id/source2" style="@style/WidgetSource" />
+    <TextView android:id="@+id/title2" style="@style/WidgetTitle" />
+    <TextView android:id="@+id/source3" style="@style/WidgetSource" />
+    <TextView android:id="@+id/title3" style="@style/WidgetTitle" />
+</LinearLayout>

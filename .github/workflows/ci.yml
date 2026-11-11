@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.6
+          channel: stable
+      - run: flutter pub get
+      - name: Generated code is fresh
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          git diff --exit-code lib/data/db/database.g.dart
+      - run: flutter analyze --fatal-infos
+      # Goldens are for looking at (rendered on Linux); CI checks behaviour.
+      - run: flutter test --test-randomize-ordering-seed random test/data test/ui
