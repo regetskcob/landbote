@@ -146,3 +146,29 @@ class FeedSheet extends ConsumerWidget {
     );
   }
 }
+
+/// The menu of folder [id] named [name]: rename or delete. From the Quellen
+/// list and, with a right click, from the sidebar.
+Future<void> showFolderMenu(BuildContext context, WidgetRef ref, int id, String name) async {
+  final repo = ref.read(repositoryProvider);
+  final choice = await showModalBottomSheet<String>(
+    context: context,
+    useRootNavigator: true,
+    builder: (context) => SafeArea(
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        ListTile(title: const Text(S.rename), onTap: () => Navigator.pop(context, 'rename')),
+        ListTile(
+          title: Text(S.deleteFolder, style: TextStyle(color: HorizontTheme.of(context).colors.critical)),
+          onTap: () => Navigator.pop(context, 'delete'),
+        ),
+      ]),
+    ),
+  );
+  if (!context.mounted) return;
+  if (choice == 'rename') {
+    final n = await askName(context, title: S.rename, initial: name);
+    if (n != null && n.isNotEmpty) await repo.renameFolder(id, n);
+  } else if (choice == 'delete') {
+    if (await confirmDestructive(context, message: S.deleteFolderConfirm(name), action: S.delete)) await repo.deleteFolder(id);
+  }
+}

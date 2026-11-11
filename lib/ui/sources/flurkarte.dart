@@ -154,9 +154,13 @@ class Flurkarte extends StatelessWidget {
                                 style: label.copyWith(color: _ink(c, ramp[loudness(f.row)])),
                               ),
                               if (f.rect.height > 56)
+                                // Area and tone say different things, so the
+                                // numbers carry their words: "3 im Monat · 2 neu".
                                 Text(
-                                  '${f.row.unread}',
-                                  style: h.data.copyWith(color: _ink(c, ramp[loudness(f.row)])),
+                                  S.flurkarteField(f.row.recent, f.row.unread),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: _ink(c, ramp[loudness(f.row)])),
                                 ),
                             ]),
                           ),
@@ -179,7 +183,8 @@ class Flurkarte extends StatelessWidget {
   }
 }
 
-/// The legend: the ramp from still to loud, the value also in words.
+/// The legend: what the tone means (unread), then the ramp from still to
+/// loud, the value also in words.
 class FlurkarteLegend extends StatelessWidget {
   /// Creates the legend.
   const FlurkarteLegend({super.key});
@@ -188,13 +193,17 @@ class FlurkarteLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     final h = HorizontTheme.of(context);
     final style = h.kennung;
-    return Row(mainAxisSize: MainAxisSize.min, children: [
-      Text(S.flurkarteLegendLow.toUpperCase(), style: style),
-      const SizedBox(width: HzSpace.s8),
-      for (final color in h.colors.dataRamp)
-        Container(width: HzSpace.s16, height: HzSpace.s8, color: color, margin: const EdgeInsets.only(right: HzSpace.s2)),
-      const SizedBox(width: HzSpace.s8),
-      Text(S.flurkarteLegendHigh.toUpperCase(), style: style),
+    // The title wraps above the ramp on a narrow phone; the ramp stays whole.
+    return Wrap(crossAxisAlignment: WrapCrossAlignment.center, spacing: HzSpace.s16, runSpacing: HzSpace.s4, children: [
+      Text(S.flurkarteLegendTitle.toUpperCase(), style: style),
+      Row(mainAxisSize: MainAxisSize.min, children: [
+        Text(S.flurkarteLegendLow.toUpperCase(), style: style),
+        const SizedBox(width: HzSpace.s8),
+        for (final color in h.colors.dataRamp)
+          Container(width: HzSpace.s16, height: HzSpace.s8, color: color, margin: const EdgeInsets.only(right: HzSpace.s2)),
+        const SizedBox(width: HzSpace.s8),
+        Text(S.flurkarteLegendHigh.toUpperCase(), style: style),
+      ]),
     ]);
   }
 }
