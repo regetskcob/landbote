@@ -31,8 +31,8 @@ class ReadingStylePage extends ConsumerWidget {
         padding: const EdgeInsets.all(HzSpace.s16),
         decoration: BoxDecoration(
           color: c.surface,
-          borderRadius: BorderRadius.circular(HzRadius.r10),
-          border: Border.all(color: c.lineStrong, width: HzLine.hairline),
+          borderRadius: BorderRadius.circular(HzSoft.card),
+          border: Border.all(color: c.line, width: HzLine.hairline),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Kennung(S.preview),

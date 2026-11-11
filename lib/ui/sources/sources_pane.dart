@@ -194,7 +194,7 @@ class _FeedLine extends StatelessWidget {
                 Kennung(shortTime(r!.lastPublished!), oneLine: true),
             ]),
           ),
-          if (count > 0) Text('$count', style: h.data.copyWith(color: c.textMuted)),
+          if (count > 0) Text('$count', style: h.count),
           if (r != null)
             IconButton(
               tooltip: S.feedSettings,
