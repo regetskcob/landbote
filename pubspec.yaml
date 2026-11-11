@@ -46,7 +46,7 @@ dependencies:
   horizont:
     git:
       url: https://github.com/regetskcob/horizont.git
-      ref: claude/gifted-einstein-fx1rkl
+      ref: v0.12.0
       path: flutter
   flutter_localizations:
     sdk: flutter

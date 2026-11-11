@@ -505,8 +505,8 @@ packages:
     dependency: "direct main"
     description:
       path: flutter
-      ref: "claude/gifted-einstein-fx1rkl"
-      resolved-ref: "17b6ec8c6a735f1eb6c45f28a068edc1e459f41c"
+      ref: "v0.12.0"
+      resolved-ref: cc0cbd792cd012a052c321c41e66cced4e3c2e84
       url: "https://github.com/regetskcob/horizont.git"
     source: git
     version: "0.12.0"
