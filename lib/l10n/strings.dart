@@ -102,7 +102,9 @@ abstract final class S {
   static const mapView = 'Flurkarte';
   static const manageSources = 'Quellen verwalten';
   static const flurkarteKennung = 'FLURKARTE · FLÄCHE NACH BEITRÄGEN IM MONAT';
+  static const flurkarteLegendTitle = 'Farbe nach Ungelesenen';
   static const flurkarteLegendLow = 'still';
+  static String flurkarteField(int recent, int unread) => unread > 0 ? '$recent im Monat · $unread neu' : '$recent im Monat';
   static const flurkarteLegendHigh = 'laut';
   static String flurkarteSemantics(String t, int n, int u) => '$t, $n Beiträge im Monat, $u ungelesen';
 
