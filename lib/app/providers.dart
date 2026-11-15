@@ -189,6 +189,9 @@ class RefreshState {
   final bool offline;
 }
 
+/// The clock of the app; tests fix it so that "abgeglichen 18:25" stays put.
+final clockProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+
 /// Refreshes feeds and syncs; one run at a time.
 final refreshProvider = NotifierProvider<RefreshController, RefreshState>(RefreshController.new);
 
@@ -230,7 +233,7 @@ class RefreshController extends Notifier<RefreshState> {
     final offline = report.feeds > 0 && report.failed >= report.feeds;
     var lastAt = before.lastAt;
     if (!offline && report.feeds > 0) {
-      lastAt = DateTime.now();
+      lastAt = ref.read(clockProvider)();
       await ref.read(preferencesProvider).setInt(_lastAtKey, lastAt.millisecondsSinceEpoch);
     }
     return state = RefreshState(lastNew: fresh, lastFailed: report.failed, lastError: error, lastAt: lastAt, offline: offline);

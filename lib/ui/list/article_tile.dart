@@ -19,7 +19,7 @@ import '../timeline.dart';
 /// An article row.
 class ArticleTile extends ConsumerWidget {
   /// Creates the row.
-  const ArticleTile({required this.row, required this.selected, required this.onOpen, this.indent = false, this.showSource = true, super.key});
+  const ArticleTile({required this.row, required this.selected, required this.onOpen, this.indent = false, this.showSource = true, this.showDate = true, super.key});
 
   /// The article.
   final ArticleRow row;
@@ -36,6 +36,10 @@ class ArticleTile extends ConsumerWidget {
   /// Whether the source name shows (not in a feed's own list).
   final bool showSource;
 
+  /// Whether the date shows (not under a day header, which already says it;
+  /// an article of today keeps its time).
+  final bool showDate;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final h = HorizontTheme.of(context);
@@ -47,7 +51,7 @@ class ArticleTile extends ConsumerWidget {
     final images = ref.watch(settingsProvider.select((s) => s.images)) == ImageLoading.always;
     final meta = [
       if (showSource) row.feedTitle,
-      shortTime(a.publishedAt),
+      if (showDate || DateUtils.isSameDay(a.publishedAt.toLocal(), DateTime.now())) shortTime(a.publishedAt),
       if (a.readingMinutes > 0) S.minutes(a.readingMinutes),
     ].join(horizontMetaSeparator);
     // What one reads is set in Literata; larger on touch, where the list is
@@ -67,6 +71,7 @@ class ArticleTile extends ConsumerWidget {
     );
     final metaStyle = t.bodySmall?.copyWith(color: c.textMuted);
     const dot = 8.0;
+    final metaShown = meta.isNotEmpty || row.isSaved;
     final gutter = pointer ? HzSpace.s24 : HzSpace.s32 - HzSpace.s4;
     final thumb = a.imageUrl != null && images
         ? Padding(
@@ -109,20 +114,22 @@ class ArticleTile extends ConsumerWidget {
           child: read
               ? null
               : Padding(
-                  padding: EdgeInsets.only(top: (pointer ? 20 : 22) + (pointer ? 22 : 26) / 2 - dot / 2),
+                  padding: EdgeInsets.only(top: (metaShown ? (pointer ? 20 : 22) : 0) + (pointer ? 22 : 26) / 2 - dot / 2),
                   child: Center(child: DecoratedBox(decoration: BoxDecoration(color: c.accent, shape: BoxShape.circle), child: const SizedBox.square(dimension: dot))),
                 ),
         ),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(children: [
-              Flexible(child: Text(meta, maxLines: 1, overflow: TextOverflow.ellipsis, style: metaStyle)),
-              if (row.isSaved) ...[
-                const SizedBox(width: HzSpace.s4),
-                Icon(HorizontSymbols.bookmarkFill, size: HzIconSize.badge, color: c.accentText),
-              ],
-            ]),
-            const SizedBox(height: HzSpace.s4),
+            if (metaShown) ...[
+              Row(children: [
+                Flexible(child: Text(meta, maxLines: 1, overflow: TextOverflow.ellipsis, style: metaStyle)),
+                if (row.isSaved) ...[
+                  const SizedBox(width: HzSpace.s4),
+                  Icon(HorizontSymbols.bookmarkFill, size: HzIconSize.badge, color: c.accentText),
+                ],
+              ]),
+              const SizedBox(height: HzSpace.s4),
+            ],
             title,
             if (a.summary.isNotEmpty && a.title.isNotEmpty) ...[
               const SizedBox(height: HzSpace.s4),
