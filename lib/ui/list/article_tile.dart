@@ -66,7 +66,9 @@ class ArticleTile extends ConsumerWidget {
         fontSize: pointer ? 16 : 19,
         height: pointer ? 22 / 16 : 26 / 19,
         color: read ? c.textMuted : c.text,
-        fontWeight: read ? FontWeight.w300 : FontWeight.w600,
+        // Read stays semibold and turns quiet by colour and the missing dot:
+        // the light cut was too thin to read in a list.
+        fontWeight: FontWeight.w600,
       ),
     );
     final metaStyle = t.bodySmall?.copyWith(color: c.textMuted);

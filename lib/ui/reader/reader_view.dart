@@ -280,7 +280,7 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                   Text(meta, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: c.textMuted)),
                   const SizedBox(height: HzSpace.s8),
-                  Semantics(header: true, child: Text(a.title.isEmpty ? row.feedTitle : a.title, style: Theme.of(context).textTheme.headlineMedium)),
+                  Semantics(header: true, child: Text(a.title.isEmpty ? row.feedTitle : a.title, style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600, height: 1.2))),
                   if (a.author != null && a.author!.isNotEmpty) ...[
                     const SizedBox(height: HzSpace.s8),
                     Text(a.author!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: c.textMuted)),
