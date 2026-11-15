@@ -18,7 +18,7 @@ abstract final class S {
   static const search = 'Suchen';
 
   // Kennungen
-  static String todayKennung(int n) => n == 0 ? 'HEUTE · ALLES GELESEN' : 'HEUTE · $n NEU';
+  static String todayKennung(int n) => n == 0 ? 'ALLES GELESEN' : '$n NEU';
   static String sourcesKennung(int n) => 'QUELLEN · $n';
   static String savedKennung(int n) => 'GEMERKT · $n';
   static const archiveKennung = 'ARCHIV · GELESEN UND GEERNTET';
@@ -49,8 +49,17 @@ abstract final class S {
   static const bundleOpen = 'Aufklappen';
   static const bundleClose = 'Zuklappen';
   static const yesterday = 'Gestern';
-  static String minutes(int n) => '$n MIN';
+  static String minutes(int n) => '$n Min.';
   static const showUnreadOnly = 'Nur ungelesene';
+  static const showAll = 'Alle zeigen';
+  static const dayRead = 'Alle gelesen';
+  static String dayReadDone(int n) => n == 1 ? '1 Beitrag als gelesen markiert.' : '$n Beiträge als gelesen markiert.';
+  static const undo = 'Rückgängig';
+  static const lageRunning = 'Wird abgeglichen …';
+  static String lageCurrent(String time) => 'Aktuell · abgeglichen $time';
+  static String lageOffline(String? time) => time == null ? 'Kein Empfang. Neues kommt, sobald er da ist.' : 'Kein Empfang. Stand $time, alles Geladene ist lesbar.';
+  static String lagePartial(int n, String time) => '${refreshFailed(n)} Stand $time';
+  static const offlineFullText = 'Ohne Empfang gibt es nur die Fassung aus dem Feed.';
 
   // Reader
   static const share = 'Teilen';

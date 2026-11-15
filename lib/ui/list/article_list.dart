@@ -16,6 +16,7 @@ import '../nav_state.dart';
 import '../reader/reader_view.dart';
 import '../timeline.dart';
 import 'article_tile.dart';
+import 'lage.dart';
 
 /// Runs a refresh and says what came of it.
 Future<void> refreshWithMessage(BuildContext context, WidgetRef ref) async {
@@ -89,6 +90,30 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
     } else {
       unawaited(pushReader(context, id));
     }
+  }
+
+  /// Marks the unread articles of one day as read. No dialog in the way:
+  /// the message offers to take it back.
+  Future<void> _markDay(List<int> ids) async {
+    if (ids.isEmpty) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final colors = HorizontTheme.of(context).colors;
+    final repo = ref.read(repositoryProvider);
+    await repo.markAllRead(ids);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(horizontMessageSnackBar(
+      colors,
+      S.dayReadDone(ids.length),
+      status: HorizontStatus.positive,
+      action: SnackBarAction(
+        label: S.undo,
+        onPressed: () async {
+          for (final id in ids) {
+            await repo.setRead(id, false);
+          }
+        },
+      ),
+    ));
   }
 
   Future<void> _markAll(List<ArticleRow> rows) async {
@@ -172,7 +197,10 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
               icon: const Icon(HorizontSymbols.search),
               onPressed: () => setState(() => _searching = true),
             ),
-          if (scope is! SavedScope && !compactSearch)
+          // With a pointer the filter and "all read" are toolbar buttons with a
+          // tooltip. On touch they carry their word: the filter in the line
+          // under the head, "Alle gelesen" at each day.
+          if (pointer && scope is! SavedScope && !compactSearch)
             IconButton(
               tooltip: S.showUnreadOnly,
               isSelected: settings.unreadOnly,
@@ -180,27 +208,34 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
               icon: const Icon(HorizontSymbols.filterAlt),
               onPressed: () => ref.read(settingsProvider.notifier).update((s) => s.copyWith(unreadOnly: !s.unreadOnly)),
             ),
-          if (!compactSearch && unread > 0)
+          if (pointer && !compactSearch && unread > 0)
             IconButton(tooltip: S.markAllRead, icon: const Icon(HorizontSymbols.doneAll), onPressed: () => _markAll(rows)),
           if (pointer)
             IconButton(
               tooltip: S.refresh,
-              icon: refreshing
-                  ? const SizedBox.square(dimension: HzIconSize.bar, child: CircularProgressIndicator.adaptive(strokeWidth: 2))
-                  : const Icon(HorizontSymbols.refresh),
+              // No spinner: the line under the head says that it runs.
+              icon: const Icon(HorizontSymbols.refresh),
               onPressed: refreshing ? null : () => refreshWithMessage(context, ref),
             ),
           const SizedBox(width: HzSpace.s4),
         ],
+        // The horizon instead of a hairline: its accent part is the share of
+        // this list that is read.
+        bottom: ListHorizont(fraction: rows.isEmpty ? 0 : (rows.length - unread) / rows.length),
       ),
-      body: RefreshIndicator.adaptive(
-        onRefresh: () => refreshWithMessage(context, ref),
-        child: _body(context, entries, async, nav),
-      ),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (!_searching) LageLine(filter: scope is! SavedScope),
+        Expanded(
+          child: RefreshIndicator.adaptive(
+            onRefresh: () => refreshWithMessage(context, ref),
+            child: _body(context, entries, async, nav, rows),
+          ),
+        ),
+      ]),
     );
   }
 
-  Widget _body(BuildContext context, List<TimelineEntry> entries, AsyncValue<List<ArticleRow>> async, NavState nav) {
+  Widget _body(BuildContext context, List<TimelineEntry> entries, AsyncValue<List<ArticleRow>> async, NavState nav, List<ArticleRow> rows) {
     if (async.isLoading && !async.hasValue) return const SizedBox.shrink();
     if (entries.isEmpty) {
       final (text, detail, icon) = switch (_scope) {
@@ -217,6 +252,10 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
       );
     }
     final showSource = _scope is! FeedScope;
+    List<int> unreadOf(DateTime day) => [
+          for (final r in rows)
+            if (!r.isRead && DateUtils.isSameDay(r.article.publishedAt.toLocal(), day)) r.article.id,
+        ];
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: widget.readerBeside ? double.infinity : HzSize.page),
@@ -225,7 +264,10 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
           padding: const EdgeInsets.only(bottom: HzSpace.s48),
           itemCount: entries.length,
           itemBuilder: (context, i) => switch (entries[i]) {
-            final DayHeader e => DayHeaderTile(header: e),
+            final DayHeader e => () {
+                final ids = unreadOf(e.day);
+                return DayHeaderTile(header: e, onMarkRead: ids.isEmpty ? null : () => _markDay(ids));
+              }(),
             final BundleEntry e => BundleTile(entry: e, onToggle: () => ref.read(navProvider.notifier).toggleBundle(e.feedId)),
             final ArticleEntry e => ArticleTile(
                 key: ValueKey(e.row.article.id),

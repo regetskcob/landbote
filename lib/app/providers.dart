@@ -160,7 +160,7 @@ class AccountController extends Notifier<SyncAccount?> {
 @immutable
 class RefreshState {
   /// Creates the state.
-  const RefreshState({this.running = false, this.done = 0, this.total = 0, this.lastNew, this.lastFailed = 0, this.lastError});
+  const RefreshState({this.running = false, this.done = 0, this.total = 0, this.lastNew, this.lastFailed = 0, this.lastError, this.lastAt, this.offline = false});
 
   /// Whether a refresh runs.
   final bool running;
@@ -179,6 +179,14 @@ class RefreshState {
 
   /// A sync error of the last run.
   final String? lastError;
+
+  /// When a run last reached at least one source: the age of what the lists
+  /// show. Kept across launches.
+  final DateTime? lastAt;
+
+  /// Whether the last run reached nothing: no reception. The lists stay as
+  /// they were at [lastAt].
+  final bool offline;
 }
 
 /// Refreshes feeds and syncs; one run at a time.
@@ -188,15 +196,23 @@ final refreshProvider = NotifierProvider<RefreshController, RefreshState>(Refres
 class RefreshController extends Notifier<RefreshState> {
   Future<RefreshState>? _running;
 
+  static const _lastAtKey = 'lastRefreshAt';
+
+  DateTime? _readLastAt() {
+    final ms = ref.read(preferencesProvider).getInt(_lastAtKey);
+    return ms == null ? null : DateTime.fromMillisecondsSinceEpoch(ms);
+  }
+
   @override
-  RefreshState build() => const RefreshState();
+  RefreshState build() => RefreshState(lastAt: _readLastAt());
 
   /// Refreshes all local feeds and syncs the account. Concurrent calls join
   /// the running one.
   Future<RefreshState> refresh() => _running ??= _run().whenComplete(() => _running = null);
 
   Future<RefreshState> _run() async {
-    state = const RefreshState(running: true);
+    final before = state;
+    state = RefreshState(running: true, lastAt: before.lastAt, offline: before.offline);
     final repo = ref.read(repositoryProvider);
     var fresh = 0;
     String? error;
@@ -206,9 +222,17 @@ class RefreshController extends Notifier<RefreshState> {
     } on SyncException catch (e) {
       error = e.message;
     }
-    final report = await repo.refreshAll(onProgress: (d, t) => state = RefreshState(running: true, done: d, total: t));
+    final report = await repo.refreshAll(onProgress: (d, t) => state = RefreshState(running: true, done: d, total: t, lastAt: before.lastAt, offline: before.offline));
     await repo.harvest(days: ref.read(settingsProvider).harvestDays);
     fresh += report.newArticles;
-    return state = RefreshState(lastNew: fresh, lastFailed: report.failed, lastError: error);
+    // Nothing reached at all reads as "no reception": the lists keep their
+    // old state and say from when it is.
+    final offline = report.feeds > 0 && report.failed >= report.feeds;
+    var lastAt = before.lastAt;
+    if (!offline && report.feeds > 0) {
+      lastAt = DateTime.now();
+      await ref.read(preferencesProvider).setInt(_lastAtKey, lastAt.millisecondsSinceEpoch);
+    }
+    return state = RefreshState(lastNew: fresh, lastFailed: report.failed, lastError: error, lastAt: lastAt, offline: offline);
   }
 }
