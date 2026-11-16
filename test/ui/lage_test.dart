@@ -36,6 +36,12 @@ void main() {
     expect(l.text, startsWith('Kein Empfang.'));
   });
 
+  test('a failed account sync is never reported as current', () {
+    final l = lageOf(RefreshState(lastAt: at, lastError: 'timeout'))!;
+    expect(l.status, HorizontStatus.warning);
+    expect(l.text, startsWith('Abgleich mit dem Konto fehlgeschlagen.'));
+  });
+
   test('some sources failing is a warning with the count', () {
     final l = lageOf(RefreshState(lastAt: at, lastFailed: 2))!;
     expect(l.status, HorizontStatus.warning);

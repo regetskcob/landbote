@@ -219,8 +219,10 @@ class RefreshController extends Notifier<RefreshState> {
     final repo = ref.read(repositoryProvider);
     var fresh = 0;
     String? error;
+    var synced = false;
     try {
       final r = await ref.read(accountProvider.notifier).sync();
+      synced = r != null;
       fresh += r?.newArticles ?? 0;
     } on SyncException catch (e) {
       error = e.message;
@@ -230,9 +232,13 @@ class RefreshController extends Notifier<RefreshState> {
     fresh += report.newArticles;
     // Nothing reached at all reads as "no reception": the lists keep their
     // old state and say from when it is.
-    final offline = report.feeds > 0 && report.failed >= report.feeds;
+    // The account counts like a source: a run reached something when the
+    // sync or at least one feed answered.
+    final tried = report.feeds > 0 || synced || error != null;
+    final reached = synced || report.failed < report.feeds;
+    final offline = tried && !reached;
     var lastAt = before.lastAt;
-    if (!offline && report.feeds > 0) {
+    if (reached) {
       lastAt = ref.read(clockProvider)();
       await ref.read(preferencesProvider).setInt(_lastAtKey, lastAt.millisecondsSinceEpoch);
     }

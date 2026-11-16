@@ -56,6 +56,8 @@ class ListHorizont extends StatelessWidget implements PreferredSizeWidget {
   if (r.running) return (icon: HorizontSymbols.sync, status: HorizontStatus.neutral, text: S.lageRunning);
   if (r.offline) return (icon: HorizontSymbols.cloudOff, status: HorizontStatus.warning, text: S.lageOffline(time));
   if (time == null) return null;
+  // A failed account sync is no "Aktuell", even with every feed answering.
+  if (r.lastError != null) return (icon: HorizontStatus.warning.icon, status: HorizontStatus.warning, text: S.lageSyncFailed(time));
   if (r.lastFailed > 0) return (icon: HorizontStatus.warning.icon, status: HorizontStatus.warning, text: S.lagePartial(r.lastFailed, time));
   return (icon: HorizontStatus.positive.icon, status: HorizontStatus.positive, text: S.lageCurrent(time));
 }

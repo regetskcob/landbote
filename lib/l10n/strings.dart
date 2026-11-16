@@ -60,6 +60,7 @@ abstract final class S {
   static String lageCurrent(String time) => 'Aktuell · abgeglichen $time';
   static String lageOffline(String? time) => time == null ? 'Kein Empfang. Neues kommt, sobald er da ist.' : 'Kein Empfang. Stand $time, alles Geladene ist lesbar.';
   static String lagePartial(int n, String time) => '${refreshFailed(n)} Stand $time';
+  static String lageSyncFailed(String time) => 'Abgleich mit dem Konto fehlgeschlagen. Stand $time';
   static const offlineFullText = 'Ohne Empfang gibt es nur die Fassung aus dem Feed.';
 
   // Reader
