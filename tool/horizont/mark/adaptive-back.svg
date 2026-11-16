@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="hz-app-icon" width="1024" height="1024" viewBox="-25 -25 150 150" role="img" aria-label="App-Icon Landbote">
+  <defs>
+    <clipPath id="hzi45c"><rect x="-25" y="-25" width="150" height="150"/></clipPath>
+    <linearGradient id="hzi45s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E1ECEA"/><stop offset="1" stop-color="#AFC7C3"/></linearGradient>
+    <filter id="hzi45b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="hzi45f" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <filter id="hzi45d" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="1.2" dy="2.4" stdDeviation="1.6" flood-color="#0E1F1D" flood-opacity=".5"/></filter>
+  </defs>
+  <g clip-path="url(#hzi45c)">
+    <rect x="-25" y="-25" width="150" height="91.7" fill="url(#hzi45s)"/>
+    <rect x="-25" y="66.7" width="150" height="58.3" fill="#2D6A63"/>
+    <g filter="url(#hzi45b)" opacity=".7">
+      <ellipse cx="18" cy="22" rx="24" ry="11" fill="#AFC7C3"/>
+      <ellipse cx="80" cy="44" rx="22" ry="9" fill="#E1ECEA"/>
+      <ellipse cx="62" cy="10" rx="20" ry="8" fill="#E1ECEA"/>
+      <ellipse cx="24" cy="86" rx="26" ry="8" fill="#1D4A45"/>
+      <ellipse cx="82" cy="94" rx="22" ry="7" fill="#1D4A45"/>
+    </g>
+
+    <rect x="-25" y="65.9" width="150" height="1.6" fill="#F1F8F6"/>
+  </g>
+</svg>

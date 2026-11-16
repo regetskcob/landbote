@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:horizont/horizont.dart';
 
 import '../l10n/strings.dart';
+import '../theme/product.dart';
 import '../ui/shell.dart';
 import 'settings.dart';
 
@@ -21,8 +22,8 @@ class LandboteApp extends ConsumerWidget {
     return MaterialApp(
       title: S.appName,
       debugShowCheckedModeBanner: false,
-      theme: buildHorizontTheme(HorizontProduct.landbote, Brightness.light),
-      darkTheme: buildHorizontTheme(HorizontProduct.landbote, Brightness.dark),
+      theme: buildHorizontTheme(landbote, Brightness.light),
+      darkTheme: buildHorizontTheme(landbote, Brightness.dark),
       themeMode: mode,
       themeAnimationStyle: AnimationStyle.noAnimation,
       locale: const Locale('de'),

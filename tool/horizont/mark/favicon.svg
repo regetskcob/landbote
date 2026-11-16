@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="hz-app-icon" width="64" height="64" viewBox="0 0 100 100" role="img" aria-label="App-Icon Landbote">
+  <defs>
+    <clipPath id="hzi49c"><rect x="0" y="0" width="100" height="100" rx="22.4"/></clipPath>
+    <linearGradient id="hzi49s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E1ECEA"/><stop offset="1" stop-color="#AFC7C3"/></linearGradient>
+    <filter id="hzi49b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="hzi49f" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="1.2"/></filter>
+    <filter id="hzi49d" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="1.2" dy="2.4" stdDeviation="1.6" flood-color="#0E1F1D" flood-opacity=".5"/></filter>
+  </defs>
+  <g clip-path="url(#hzi49c)">
+    <rect x="0" y="0" width="100" height="66.7" fill="url(#hzi49s)"/>
+    <rect x="0" y="66.7" width="100" height="33.3" fill="#2D6A63"/>
+    <g filter="url(#hzi49b)" opacity=".7">
+      <ellipse cx="18" cy="22" rx="24" ry="11" fill="#AFC7C3"/>
+      <ellipse cx="80" cy="44" rx="22" ry="9" fill="#E1ECEA"/>
+      <ellipse cx="62" cy="10" rx="20" ry="8" fill="#E1ECEA"/>
+      <ellipse cx="24" cy="86" rx="26" ry="8" fill="#1D4A45"/>
+      <ellipse cx="82" cy="94" rx="22" ry="7" fill="#1D4A45"/>
+    </g>
+
+    <rect x="0" y="65.9" width="100" height="1.6" fill="#F1F8F6"/>
+    <g filter="url(#hzi49d)" stroke="#0E1F1D" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M47 70.4V45h6v25.4z" fill="#C79C63"/>
+      <path d="M40 46.4v-3h20v3z" fill="#8C6638"/>
+      <path d="M64.6 40V12.6h2.8V40z" fill="#A9342A"/>
+      <path d="M67.4 12.6h11v8h-11z" fill="#D9473A"/>
+      <path d="M22 44V36a9 9 0 0 1 9-9h34a9 9 0 0 1 9 9v8z" fill="#D6CCB6"/>
+      <path d="M22 44V36a9 9 0 0 1 9-9h0v17z" fill="#F3EEE2"/>
+      <g stroke="none">
+        <path d="M47.9 47.2h2.2v22.6h-2.2z" fill="#E3C08B"/>
+        <path d="M33 29.4h31a7 7 0 0 1 6.4 4.2H33z" fill="#F3EEE2" opacity=".7"/>
+        <path d="M31.8 40.2h41.4V43.2H31.8z" fill="#A89C83"/>
+        <path d="M67.4 17.4h10.2v2.2H67.4z" fill="#A9342A" opacity=".6"/>
+        <circle cx="26.6" cy="36.4" r="1.5" fill="#3B3A35"/>
+      </g>
+      <circle cx="66" cy="37.6" r="1.9" fill="#3B3A35"/>
+    </g>
+  </g>
+</svg>
