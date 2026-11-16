@@ -13,6 +13,7 @@ Umbau nach dem Manifest „Niederrheinisches Software-Design“:
 - Erster Start zeigt die Begrüßung mit dem ersten Schritt auf Heute statt „Alles gelesen“
 - Quellen sagen „zuletzt 5. Nov“ und „3 neu“; Permalink-Zeichen in Überschriften entfallen
 - Entwicklerteam für iOS und macOS im Xcode-Projekt
+- Horizont 0.15.0: Lage-Zeile, Horizont und Punkt kommen jetzt aus dem Paket
 
 ## 1.0.0
 

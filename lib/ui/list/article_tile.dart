@@ -117,7 +117,7 @@ class ArticleTile extends ConsumerWidget {
               ? null
               : Padding(
                   padding: EdgeInsets.only(top: (metaShown ? (pointer ? 20 : 22) : 0) + (pointer ? 22 : 26) / 2 - dot / 2),
-                  child: Center(child: DecoratedBox(decoration: BoxDecoration(color: c.accent, shape: BoxShape.circle), child: const SizedBox.square(dimension: dot))),
+                  child: const Center(child: HorizontDot(size: dot)),
                 ),
         ),
         Expanded(
