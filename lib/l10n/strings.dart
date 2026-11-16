@@ -258,6 +258,8 @@ abstract final class S {
       'Füge Seiten hinzu, die du lesen willst. Landbote holt neue Beiträge, zeigt sie in Ruhe und vergisst, was du nicht lesen wolltest.';
   static const welcomeStart = 'Mit regetskcob.de anfangen';
   static const welcomeStarting = 'Wird geholt …';
+  static const noSourcesKennung = 'NOCH KEINE QUELLE';
+  static const pickArticle = 'Wähle links einen Beitrag.';
   static String lastPost(String when) => 'zuletzt $when';
   static String newCount(int n) => '$n neu';
   static const welcomeOwn = 'Eigene Quelle hinzufügen';

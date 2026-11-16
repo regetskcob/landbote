@@ -159,6 +159,9 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
     });
 
     final count = scope is SavedScope ? rows.length : unread;
+    // Someone without any source sees the welcome: no "all read" above it
+    // and no state line, there is nothing to be current about yet.
+    final noSources = ref.watch(feedsProvider).value?.isEmpty ?? false;
     final searchField = SizedBox(
       width: width >= HzBreakpoint.medium ? HzSize.search : null,
       child: TextField(
@@ -189,7 +192,7 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
         leading: widget.leading,
         toolbarHeight: HorizontTitle.toolbarHeight(context),
         titleSpacing: widget.leading == null && !Navigator.canPop(context) ? HzSpace.s16 : null,
-        title: compactSearch ? searchField : HorizontTitle(kennung: widget.kennung(count), title: widget.title),
+        title: compactSearch ? searchField : HorizontTitle(kennung: noSources ? S.noSourcesKennung : widget.kennung(count), title: widget.title),
         actions: [
           if (_searching && !compactSearch) Padding(padding: const EdgeInsets.only(right: HzSpace.s8), child: searchField),
           if (!_searching)
@@ -225,7 +228,7 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
         bottom: ListHorizont(fraction: rows.isEmpty ? 0 : (rows.length - unread) / rows.length),
       ),
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        if (!_searching) LageLine(filter: scope is! SavedScope),
+        if (!_searching && !noSources) LageLine(filter: scope is! SavedScope),
         Expanded(
           child: RefreshIndicator.adaptive(
             onRefresh: () => refreshWithMessage(context, ref),
