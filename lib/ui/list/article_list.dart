@@ -225,7 +225,7 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
         ],
         // The horizon instead of a hairline: its accent part is the share of
         // this list that is read.
-        bottom: ListHorizont(fraction: rows.isEmpty ? 0 : (rows.length - unread) / rows.length),
+        bottom: HorizontHorizon(value: rows.isEmpty ? 0 : (rows.length - unread) / rows.length),
       ),
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         if (!_searching && !noSources) LageLine(filter: scope is! SavedScope),

@@ -133,9 +133,7 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
       ),
       // The main action carries its word on the phone too. While the welcome
       // offers the first step itself, there is no second button for it.
-      floatingActionButton: feeds.isEmpty || HorizontPrimaryAction.inToolbar(context)
-          ? null
-          : FloatingActionButton.extended(onPressed: add.onPressed, icon: Icon(add.icon), label: Text(add.label)),
+      floatingActionButton: feeds.isEmpty ? null : add.fab(context),
       body: DecoratedBox(decoration: BoxDecoration(color: c.bg), child: body),
     );
   }
