@@ -46,7 +46,7 @@ dependencies:
   horizont:
     git:
       url: https://github.com/regetskcob/horizont.git
-      ref: v0.15.0
+      ref: v0.16.0
       path: flutter
   flutter_localizations:
     sdk: flutter

@@ -1,0 +1,41 @@
+{
+  "id": "landbote",
+  "horizont": "0.16.0",
+  "name": "Landbote",
+  "role": "RSS-Reader, iOS, macOS und Android",
+  "accentName": "Altrhein",
+  "light": {
+    "accent": "#1E6B66",
+    "on-accent": "#FFFFFF",
+    "accent-tint": "#E2EFED",
+    "accent-text": "#1B6661"
+  },
+  "dark": {
+    "accent": "#6FC7BC",
+    "on-accent": "#0C1F1D",
+    "accent-tint": "#172826",
+    "accent-text": "#80CFC5"
+  },
+  "icon": {
+    "_comment": "App-Icon von Landbote: Wiese am Altrhein unter hellem Himmel, am Feldrand ein Briefkasten auf einem hoelzernen Pfosten, die rote Fahne steht (neue Post).",
+    "field": "#1E6B66",
+    "glyph": "#EFF7F5",
+    "sky": "#E1ECEA",
+    "sky2": "#AFC7C3",
+    "ground": "#2D6A63",
+    "ground2": "#1D4A45",
+    "horizon": "#F1F8F6",
+    "outline": "#0E1F1D",
+    "obj": {
+      "light": "#F3EEE2",
+      "mid": "#D6CCB6",
+      "dark": "#A89C83",
+      "wood": "#C79C63",
+      "woodLight": "#E3C08B",
+      "woodDark": "#8C6638",
+      "flag": "#D9473A",
+      "flagDark": "#A9342A",
+      "knob": "#3B3A35"
+    }
+  }
+}

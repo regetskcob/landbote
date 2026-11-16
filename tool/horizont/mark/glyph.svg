@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="hz-mark" width="1024" height="1024" viewBox="0 0 100 100" role="img" aria-label="Landbote" fill="none" stroke="#000000" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M4 66.7H96M50 66.7V46"/>
+  <path d="M22 46V37a9 9 0 0 1 9-9h34a9 9 0 0 1 9 9v9z"/>
+  <path d="M66 28V13.5M66 13.5h10"/>
+  <path d="M32 31v12" stroke-width="3.5"/>
+</svg>
