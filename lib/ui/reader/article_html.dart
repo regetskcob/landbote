@@ -175,6 +175,11 @@ class _ArticleHtmlState extends State<ArticleHtml> {
         final p = _paragraph(context, e.nodes);
         return p == null ? const [] : [p];
       case 'h1' || 'h2' || 'h3' || 'h4' || 'h5' || 'h6':
+        // Blogs hang a permalink on their headings ("#", "¶"); in a reader
+        // it is noise and would end up in the Lese-Horizont's labels.
+        for (final link in e.querySelectorAll('a').toList()) {
+          if (const {'#', '¶', '§', '🔗'}.contains(link.text.trim())) link.remove();
+        }
         final text = e.text.trim();
         if (text.isEmpty) return const [];
         final key = GlobalKey();
