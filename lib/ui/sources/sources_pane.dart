@@ -54,7 +54,7 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
 
     Widget body;
     if (feeds.isEmpty) {
-      body = const _Welcome();
+      body = const Welcome();
     } else if (asMap) {
       body = Padding(
         padding: EdgeInsets.fromLTRB(HzSpace.s16, HzSpace.s8, HzSpace.s16, add.fab(context) == null ? HzSpace.s16 : 88),
@@ -131,7 +131,11 @@ class _SourcesPaneState extends ConsumerState<SourcesPane> {
           const SizedBox(width: HzSpace.s4),
         ],
       ),
-      floatingActionButton: add.fab(context),
+      // The main action carries its word on the phone too. While the welcome
+      // offers the first step itself, there is no second button for it.
+      floatingActionButton: feeds.isEmpty || HorizontPrimaryAction.inToolbar(context)
+          ? null
+          : FloatingActionButton.extended(onPressed: add.onPressed, icon: Icon(add.icon), label: Text(add.label)),
       body: DecoratedBox(decoration: BoxDecoration(color: c.bg), child: body),
     );
   }
@@ -172,10 +176,10 @@ class _FeedLine extends StatelessWidget {
               if (failing)
                 HorizontStatusLine(HorizontStatus.warning, r.feed.lastError ?? S.error)
               else if (r?.lastPublished != null)
-                Kennung(shortTime(r!.lastPublished!), oneLine: true),
+                Text(S.lastPost(shortTime(r!.lastPublished!)), maxLines: 1, overflow: TextOverflow.ellipsis, style: t.bodySmall?.copyWith(color: c.textMuted)),
             ]),
           ),
-          if (count > 0) Text('$count', style: h.count),
+          if (count > 0) Text(S.newCount(count), style: t.bodySmall?.copyWith(color: c.text, fontWeight: FontWeight.w600)),
           if (r != null)
             IconButton(
               tooltip: S.feedSettings,
@@ -190,14 +194,17 @@ class _FeedLine extends StatelessWidget {
   }
 }
 
-class _Welcome extends ConsumerStatefulWidget {
-  const _Welcome();
+/// The first screen of someone without sources: what Landbote is and the
+/// first step, on Heute as well as on Quellen.
+class Welcome extends ConsumerStatefulWidget {
+  /// Creates the welcome.
+  const Welcome({super.key});
 
   @override
-  ConsumerState<_Welcome> createState() => _WelcomeState();
+  ConsumerState<Welcome> createState() => _WelcomeState();
 }
 
-class _WelcomeState extends ConsumerState<_Welcome> {
+class _WelcomeState extends ConsumerState<Welcome> {
   bool _busy = false;
 
   Future<void> _start() async {
@@ -227,7 +234,7 @@ class _WelcomeState extends ConsumerState<_Welcome> {
             const SizedBox(height: HzSpace.s32),
             FilledButton(onPressed: () => showAddFeed(context), child: const Text(S.welcomeOwn)),
             const SizedBox(height: HzSpace.s8),
-            OutlinedButton(onPressed: _busy ? null : () => unawaited(_start()), child: const Text(S.welcomeStart)),
+            OutlinedButton(onPressed: _busy ? null : () => unawaited(_start()), child: Text(_busy ? S.welcomeStarting : S.welcomeStart)),
             const SizedBox(height: HzSpace.s8),
             TextButton(onPressed: () => pushSettings(context, opml: true), child: const Text(S.importOpml)),
           ]),

@@ -320,7 +320,9 @@ class _ShellState extends ConsumerState<Shell> with WidgetsBindingObserver {
         if (readerBeside)
           Expanded(
             child: nav.articleId == null
-                ? Scaffold(body: HorizontEmptyHint(text: S.welcomeTitle, icon: HorizontSymbols.article))
+                // Empty while there is no source (the list holds the welcome),
+                // otherwise one line that says what to do.
+                ? Scaffold(backgroundColor: c.surface, body: feeds.isEmpty ? const SizedBox.shrink() : const HorizontEmptyHint(text: S.pickArticle, icon: HorizontSymbols.article))
                 : ReaderView(key: const ValueKey('reader'), articleId: nav.articleId!, embedded: true),
           ),
       ]),

@@ -53,6 +53,7 @@ Future<Harness> pumpApp(WidgetTester tester, {required Size size, Brightness bri
     databaseProvider.overrideWithValue(db),
     httpClientProvider.overrideWithValue(client),
     storeEnabledProvider.overrideWithValue(false),
+    clockProvider.overrideWithValue(() => DateTime(2026, 11, 11, 8, 12)),
   ]);
   await tester.runAsync(() async {
     final repo = container.read(repositoryProvider);

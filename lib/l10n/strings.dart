@@ -18,7 +18,7 @@ abstract final class S {
   static const search = 'Suchen';
 
   // Kennungen
-  static String todayKennung(int n) => n == 0 ? 'HEUTE · ALLES GELESEN' : 'HEUTE · $n NEU';
+  static String todayKennung(int n) => n == 0 ? 'ALLES GELESEN' : '$n NEU';
   static String sourcesKennung(int n) => 'QUELLEN · $n';
   static String savedKennung(int n) => 'GEMERKT · $n';
   static const archiveKennung = 'ARCHIV · GELESEN UND GEERNTET';
@@ -49,8 +49,19 @@ abstract final class S {
   static const bundleOpen = 'Aufklappen';
   static const bundleClose = 'Zuklappen';
   static const yesterday = 'Gestern';
-  static String minutes(int n) => '$n MIN';
+  static String minutes(int n) => '$n Min.';
   static const showUnreadOnly = 'Nur ungelesene';
+  static const showAll = 'Alle zeigen';
+  static const dayRead = 'Alle gelesen';
+  static String dayReadDone(int n) => n == 1 ? '1 Beitrag als gelesen markiert.' : '$n Beiträge als gelesen markiert.';
+  static const undo = 'Rückgängig';
+  static String markRest(int n) => 'Alle $n als gelesen markieren';
+  static const lageRunning = 'Wird abgeglichen …';
+  static String lageCurrent(String time) => 'Aktuell · abgeglichen $time';
+  static String lageOffline(String? time) => time == null ? 'Kein Empfang. Neues kommt, sobald er da ist.' : 'Kein Empfang. Stand $time, alles Geladene ist lesbar.';
+  static String lagePartial(int n, String time) => '${refreshFailed(n)} Stand $time';
+  static String lageSyncFailed(String time) => 'Abgleich mit dem Konto fehlgeschlagen. Stand $time';
+  static const offlineFullText = 'Ohne Empfang gibt es nur die Fassung aus dem Feed.';
 
   // Reader
   static const share = 'Teilen';
@@ -148,7 +159,7 @@ abstract final class S {
   static const ruleMarkRead = 'Als gelesen';
   static const ruleAllFeeds = 'Alle Quellen';
   static const noRules = 'Keine Gräben. Alles fließt durch.';
-  static const importOpml = 'OPML importieren';
+  static const importOpml = 'Aus anderer App übernehmen (OPML)';
   static const exportOpml = 'OPML exportieren';
   static String imported(int n) => n == 1 ? '1 Quelle importiert.' : '$n Quellen importiert.';
   static const importFailed = 'Die Datei ist keine lesbare OPML-Datei.';
@@ -247,5 +258,10 @@ abstract final class S {
   static const welcomeText =
       'Füge Seiten hinzu, die du lesen willst. Landbote holt neue Beiträge, zeigt sie in Ruhe und vergisst, was du nicht lesen wolltest.';
   static const welcomeStart = 'Mit regetskcob.de anfangen';
+  static const welcomeStarting = 'Wird geholt …';
+  static const noSourcesKennung = 'NOCH KEINE QUELLE';
+  static const pickArticle = 'Wähle links einen Beitrag.';
+  static String lastPost(String when) => 'zuletzt $when';
+  static String newCount(int n) => '$n neu';
   static const welcomeOwn = 'Eigene Quelle hinzufügen';
 }

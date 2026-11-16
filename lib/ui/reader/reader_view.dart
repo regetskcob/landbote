@@ -186,14 +186,15 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
     final supporter = ref.watch(isSupporterProvider);
     final style = ReaderStyle.of(context, settings, supporter: supporter);
     final pointer = h.density == HorizontDensity.pointer;
+    final offline = ref.watch(refreshProvider.select((s) => s.offline));
     final order = ref.read(visibleOrderProvider.notifier);
     final next = order.after(a.id);
     final previous = order.before(a.id);
 
     final horizon = LeseHorizont(progress: _progress, ticks: _ticks, onSeek: _seek);
     final bar = AppBar(
+      backgroundColor: widget.embedded ? c.surface : null,
       automaticallyImplyLeading: !widget.embedded,
-      title: pointer ? null : Kennung(row.feedTitle, oneLine: true),
       actions: [
         IconButton(
           tooltip: row.isSaved ? S.unsave : S.save,
@@ -210,7 +211,9 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
               onPressed: () => shareLink(context, a.url!, a.title),
             ),
           ),
-        if (a.url != null)
+        // On touch "Im Browser öffnen" stands with its word at the end of the
+        // article and in the menu; the bar keeps the two signs everyone knows.
+        if (a.url != null && pointer)
           IconButton(tooltip: S.openInBrowser, icon: const Icon(HorizontSymbols.openInBrowser), onPressed: () => openLink(ref, a.url!, forceBrowser: true)),
         PopupMenuButton<String>(
           tooltip: S.menu,
@@ -228,12 +231,15 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
                 _markedFor = a.id;
               case 'copy':
                 if (context.mounted) await copyLink(context, a.url!);
+              case 'browser':
+                await openLink(ref, a.url!, forceBrowser: true);
             }
           },
           itemBuilder: (_) => [
             if (a.url != null && (a.fullHtml == null || _feedVersion)) const PopupMenuItem(value: 'full', child: Text(S.fullText)),
             if (a.fullHtml != null && !_feedVersion) const PopupMenuItem(value: 'feed', child: Text(S.feedVersion)),
             const PopupMenuItem(value: 'unread', child: Text(S.markUnread)),
+            if (a.url != null && !pointer) const PopupMenuItem(value: 'browser', child: Text(S.openInBrowser)),
             if (a.url != null) const PopupMenuItem(value: 'copy', child: Text(S.copyLink)),
           ],
         ),
@@ -251,6 +257,9 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
     final contentHasImage = source.contains('<img');
 
     return Scaffold(
+      // Beside the list the reader lies on its own tone, like a field next
+      // to the path.
+      backgroundColor: widget.embedded ? c.surface : null,
       appBar: bar,
       bottomNavigationBar: pointer ? null : DecoratedBox(
         decoration: BoxDecoration(color: c.bg, border: Border(top: BorderSide(color: c.line, width: HzLine.hairline))),
@@ -269,9 +278,9 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: HzSize.textColumn),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                  Kennung(meta),
+                  Text(meta, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: c.textMuted)),
                   const SizedBox(height: HzSpace.s8),
-                  Semantics(header: true, child: Text(a.title.isEmpty ? row.feedTitle : a.title, style: Theme.of(context).textTheme.headlineMedium)),
+                  Semantics(header: true, child: Text(a.title.isEmpty ? row.feedTitle : a.title, style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600, height: 1.2))),
                   if (a.author != null && a.author!.isNotEmpty) ...[
                     const SizedBox(height: HzSpace.s8),
                     Text(a.author!, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: c.textMuted)),
@@ -298,9 +307,9 @@ class _ReaderViewState extends ConsumerState<ReaderView> {
                       ]),
                     ),
                   if (_full == _FullText.failed)
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: HzSpace.s16),
-                      child: HorizontNotice(HorizontStatus.info, child: Text(S.fullTextFailed)),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: HzSpace.s16),
+                      child: HorizontNotice(HorizontStatus.info, child: Text(offline ? S.offlineFullText : S.fullTextFailed)),
                     ),
                   if (source.trim().isEmpty)
                     Text(S.noContent, style: style.body.copyWith(color: c.textMuted))

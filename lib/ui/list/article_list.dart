@@ -15,7 +15,9 @@ import '../../l10n/strings.dart';
 import '../nav_state.dart';
 import '../reader/reader_view.dart';
 import '../timeline.dart';
+import '../sources/sources_pane.dart';
 import 'article_tile.dart';
+import 'lage.dart';
 
 /// Runs a refresh and says what came of it.
 Future<void> refreshWithMessage(BuildContext context, WidgetRef ref) async {
@@ -91,6 +93,30 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
     }
   }
 
+  /// Marks the unread articles of one day as read. No dialog in the way:
+  /// the message offers to take it back.
+  Future<void> _markDay(List<int> ids) async {
+    if (ids.isEmpty) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final colors = HorizontTheme.of(context).colors;
+    final repo = ref.read(repositoryProvider);
+    await repo.markAllRead(ids);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(horizontMessageSnackBar(
+      colors,
+      S.dayReadDone(ids.length),
+      status: HorizontStatus.positive,
+      action: SnackBarAction(
+        label: S.undo,
+        onPressed: () async {
+          for (final id in ids) {
+            await repo.setRead(id, false);
+          }
+        },
+      ),
+    ));
+  }
+
   Future<void> _markAll(List<ArticleRow> rows) async {
     final ids = [for (final r in rows) if (!r.isRead) r.article.id];
     if (ids.isEmpty) return;
@@ -133,6 +159,9 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
     });
 
     final count = scope is SavedScope ? rows.length : unread;
+    // Someone without any source sees the welcome: no "all read" above it
+    // and no state line, there is nothing to be current about yet.
+    final noSources = ref.watch(feedsProvider).value?.isEmpty ?? false;
     final searchField = SizedBox(
       width: width >= HzBreakpoint.medium ? HzSize.search : null,
       child: TextField(
@@ -163,7 +192,7 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
         leading: widget.leading,
         toolbarHeight: HorizontTitle.toolbarHeight(context),
         titleSpacing: widget.leading == null && !Navigator.canPop(context) ? HzSpace.s16 : null,
-        title: compactSearch ? searchField : HorizontTitle(kennung: widget.kennung(count), title: widget.title),
+        title: compactSearch ? searchField : HorizontTitle(kennung: noSources ? S.noSourcesKennung : widget.kennung(count), title: widget.title),
         actions: [
           if (_searching && !compactSearch) Padding(padding: const EdgeInsets.only(right: HzSpace.s8), child: searchField),
           if (!_searching)
@@ -172,7 +201,10 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
               icon: const Icon(HorizontSymbols.search),
               onPressed: () => setState(() => _searching = true),
             ),
-          if (scope is! SavedScope && !compactSearch)
+          // With a pointer the filter and "all read" are toolbar buttons with a
+          // tooltip. On touch they carry their word: the filter in the line
+          // under the head, "Alle gelesen" at each day.
+          if (pointer && scope is! SavedScope && !compactSearch)
             IconButton(
               tooltip: S.showUnreadOnly,
               isSelected: settings.unreadOnly,
@@ -180,28 +212,39 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
               icon: const Icon(HorizontSymbols.filterAlt),
               onPressed: () => ref.read(settingsProvider.notifier).update((s) => s.copyWith(unreadOnly: !s.unreadOnly)),
             ),
-          if (!compactSearch && unread > 0)
+          if (pointer && !compactSearch && unread > 0)
             IconButton(tooltip: S.markAllRead, icon: const Icon(HorizontSymbols.doneAll), onPressed: () => _markAll(rows)),
           if (pointer)
             IconButton(
               tooltip: S.refresh,
-              icon: refreshing
-                  ? const SizedBox.square(dimension: HzIconSize.bar, child: CircularProgressIndicator.adaptive(strokeWidth: 2))
-                  : const Icon(HorizontSymbols.refresh),
+              // No spinner: the line under the head says that it runs.
+              icon: const Icon(HorizontSymbols.refresh),
               onPressed: refreshing ? null : () => refreshWithMessage(context, ref),
             ),
           const SizedBox(width: HzSpace.s4),
         ],
+        // The horizon instead of a hairline: its accent part is the share of
+        // this list that is read.
+        bottom: ListHorizont(fraction: rows.isEmpty ? 0 : (rows.length - unread) / rows.length),
       ),
-      body: RefreshIndicator.adaptive(
-        onRefresh: () => refreshWithMessage(context, ref),
-        child: _body(context, entries, async, nav),
-      ),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (!_searching && !noSources) LageLine(filter: scope is! SavedScope),
+        Expanded(
+          child: RefreshIndicator.adaptive(
+            onRefresh: () => refreshWithMessage(context, ref),
+            child: _body(context, entries, async, nav, rows),
+          ),
+        ),
+      ]),
     );
   }
 
-  Widget _body(BuildContext context, List<TimelineEntry> entries, AsyncValue<List<ArticleRow>> async, NavState nav) {
+  Widget _body(BuildContext context, List<TimelineEntry> entries, AsyncValue<List<ArticleRow>> async, NavState nav, List<ArticleRow> rows) {
     if (async.isLoading && !async.hasValue) return const SizedBox.shrink();
+    // Without any source "all read" would be wrong: say what Landbote is
+    // and offer the first step right here.
+    final noSources = ref.watch(feedsProvider).value?.isEmpty ?? false;
+    if (noSources && _scope is! SearchScope) return const Welcome();
     if (entries.isEmpty) {
       final (text, detail, icon) = switch (_scope) {
         SearchScope() => (S.emptySearch, null, HorizontSymbols.search),
@@ -217,26 +260,62 @@ class _ArticleListPaneState extends ConsumerState<ArticleListPane> {
       );
     }
     final showSource = _scope is! FeedScope;
+    final allUnread = [for (final r in rows) if (!r.isRead) r.article.id];
+    List<int> unreadOf(DateTime day) => [
+          for (final r in rows)
+            if (!r.isRead && DateUtils.isSameDay(r.article.publishedAt.toLocal(), day)) r.article.id,
+        ];
     return Center(
       child: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: widget.readerBeside ? double.infinity : HzSize.page),
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.only(bottom: HzSpace.s48),
-          itemCount: entries.length,
-          itemBuilder: (context, i) => switch (entries[i]) {
-            final DayHeader e => DayHeaderTile(header: e),
+          itemCount: entries.length + 1,
+          itemBuilder: (context, i) => i == entries.length
+              ? _EndOfList(unread: allUnread, onMarkRead: () => _markDay(allUnread))
+              : switch (entries[i]) {
+            final DayHeader e => () {
+                final ids = unreadOf(e.day);
+                // One unread article needs no button of its own: reading or
+                // swiping it does the same.
+                return DayHeaderTile(header: e, onMarkRead: ids.length < 2 ? null : () => _markDay(ids));
+              }(),
             final BundleEntry e => BundleTile(entry: e, onToggle: () => ref.read(navProvider.notifier).toggleBundle(e.feedId)),
             final ArticleEntry e => ArticleTile(
                 key: ValueKey(e.row.article.id),
                 row: e.row,
                 indent: e.inBundle,
                 showSource: showSource,
+                showDate: _scope is SavedScope,
                 selected: widget.readerBeside && nav.articleId == e.row.article.id,
                 onOpen: () => _open(e.row.article.id),
               ),
           },
         ),
+      ),
+    );
+  }
+}
+
+/// The end of a list on touch: what is left unread can be put aside in one
+/// step, with its word and a way back. With a pointer the toolbar has it.
+class _EndOfList extends StatelessWidget {
+  const _EndOfList({required this.unread, required this.onMarkRead});
+
+  final List<int> unread;
+  final VoidCallback onMarkRead;
+
+  @override
+  Widget build(BuildContext context) {
+    final pointer = HorizontTheme.of(context).density == HorizontDensity.pointer;
+    if (pointer || unread.length < 2) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(HzSpace.s16, HzSpace.s24, HzSpace.s16, 0),
+      child: OutlinedButton.icon(
+        onPressed: onMarkRead,
+        icon: const Icon(HorizontSymbols.doneAll, size: HzIconSize.row),
+        label: Text(S.markRest(unread.length)),
       ),
     );
   }

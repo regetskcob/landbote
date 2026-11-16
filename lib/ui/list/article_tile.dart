@@ -1,5 +1,7 @@
-/// One article in a list: Kennung with source and time, the headline,
-/// two lines of teaser, a thumbnail. No card; a hairline below.
+/// One article in a list: a quiet line with source and time, the headline
+/// in the reading face, two lines of teaser, a thumbnail. No card and no
+/// hairline: rows are set apart by space. Unread carries a dot in the accent
+/// and full weight, read turns light and quiet.
 library;
 
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ import '../timeline.dart';
 /// An article row.
 class ArticleTile extends ConsumerWidget {
   /// Creates the row.
-  const ArticleTile({required this.row, required this.selected, required this.onOpen, this.indent = false, this.showSource = true, super.key});
+  const ArticleTile({required this.row, required this.selected, required this.onOpen, this.indent = false, this.showSource = true, this.showDate = true, super.key});
 
   /// The article.
   final ArticleRow row;
@@ -34,6 +36,10 @@ class ArticleTile extends ConsumerWidget {
   /// Whether the source name shows (not in a feed's own list).
   final bool showSource;
 
+  /// Whether the date shows (not under a day header, which already says it;
+  /// an article of today keeps its time).
+  final bool showDate;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final h = HorizontTheme.of(context);
@@ -45,18 +51,30 @@ class ArticleTile extends ConsumerWidget {
     final images = ref.watch(settingsProvider.select((s) => s.images)) == ImageLoading.always;
     final meta = [
       if (showSource) row.feedTitle,
-      shortTime(a.publishedAt),
+      if (showDate || DateUtils.isSameDay(a.publishedAt.toLocal(), DateTime.now())) shortTime(a.publishedAt),
       if (a.readingMinutes > 0) S.minutes(a.readingMinutes),
     ].join(horizontMetaSeparator);
+    // What one reads is set in Literata; larger on touch, where the list is
+    // read at arm's length and outdoors.
     final title = Text(
       a.title.isEmpty ? a.summary : a.title,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
-      style: t.titleSmall?.copyWith(
+      style: TextStyle(
+        fontFamily: HzFont.serif,
+        package: HzFont.package,
+        fontSize: pointer ? 16 : 19,
+        height: pointer ? 22 / 16 : 26 / 19,
         color: read ? c.textMuted : c.text,
-        fontWeight: read ? FontWeight.w500 : FontWeight.w600,
+        // Read stays semibold and turns quiet by colour and the missing dot:
+        // the light cut was too thin to read in a list.
+        fontWeight: FontWeight.w600,
       ),
     );
+    final metaStyle = t.bodySmall?.copyWith(color: c.textMuted);
+    const dot = 8.0;
+    final metaShown = meta.isNotEmpty || row.isSaved;
+    final gutter = pointer ? HzSpace.s24 : HzSpace.s32 - HzSpace.s4;
     final thumb = a.imageUrl != null && images
         ? Padding(
             padding: const EdgeInsetsDirectional.only(start: HzSpace.s12),
@@ -89,22 +107,35 @@ class ArticleTile extends ConsumerWidget {
       onTap: onOpen,
       semanticsLabel: semantics,
       minHeight: HzSize.row,
-      padding: EdgeInsetsDirectional.fromSTEB(indent ? HzSpace.s32 : HzSpace.s16, HzSpace.s12, HzSpace.s16, HzSpace.s12),
+      padding: EdgeInsetsDirectional.fromSTEB(indent ? HzSpace.s16 : 0, HzSpace.s12, HzSpace.s16, HzSpace.s12),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        // The gutter holds the dot of an unread article, level with the
+        // first line of the headline.
+        SizedBox(
+          width: gutter,
+          child: read
+              ? null
+              : Padding(
+                  padding: EdgeInsets.only(top: (metaShown ? (pointer ? 20 : 22) : 0) + (pointer ? 22 : 26) / 2 - dot / 2),
+                  child: Center(child: DecoratedBox(decoration: BoxDecoration(color: c.accent, shape: BoxShape.circle), child: const SizedBox.square(dimension: dot))),
+                ),
+        ),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(children: [
-              Flexible(child: Kennung(meta, oneLine: true)),
-              if (row.isSaved) ...[
-                const SizedBox(width: HzSpace.s4),
-                Icon(HorizontSymbols.bookmarkFill, size: HzIconSize.badge, color: c.accentText),
-              ],
-            ]),
-            const SizedBox(height: HzSpace.s4),
+            if (metaShown) ...[
+              Row(children: [
+                Flexible(child: Text(meta, maxLines: 1, overflow: TextOverflow.ellipsis, style: metaStyle)),
+                if (row.isSaved) ...[
+                  const SizedBox(width: HzSpace.s4),
+                  Icon(HorizontSymbols.bookmarkFill, size: HzIconSize.badge, color: c.accentText),
+                ],
+              ]),
+              const SizedBox(height: HzSpace.s4),
+            ],
             title,
             if (a.summary.isNotEmpty && a.title.isNotEmpty) ...[
               const SizedBox(height: HzSpace.s4),
-              Text(a.summary, maxLines: pointer ? 1 : 2, overflow: TextOverflow.ellipsis, style: t.bodySmall),
+              Text(a.summary, maxLines: 2, overflow: TextOverflow.ellipsis, style: (pointer ? t.bodySmall : t.bodyMedium)?.copyWith(color: c.textMuted)),
             ],
           ]),
         ),
@@ -113,10 +144,7 @@ class ArticleTile extends ConsumerWidget {
     );
 
     tile = _Swipe(row: row, child: tile);
-    return DecoratedBox(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line, width: HzLine.hairline))),
-      child: _ContextMenu(row: row, child: tile),
-    );
+    return _ContextMenu(row: row, child: tile);
   }
 }
 
@@ -210,13 +238,12 @@ class BundleTile extends StatelessWidget {
     final c = HorizontTheme.of(context).colors;
     final t = Theme.of(context).textTheme;
     final newest = entry.rows.first.article;
-    return DecoratedBox(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: c.line, width: HzLine.hairline))),
-      child: HorizontSelectable(
+    final pointer = HorizontTheme.of(context).density == HorizontDensity.pointer;
+    return HorizontSelectable(
         selected: false,
         onTap: onToggle,
         semanticsLabel: '${entry.feedTitle}, ${S.bundle(entry.rows.length)}, ${entry.expanded ? S.bundleClose : S.bundleOpen}',
-        padding: const EdgeInsetsDirectional.fromSTEB(HzSpace.s16, HzSpace.s12, HzSpace.s16, HzSpace.s12),
+        padding: EdgeInsetsDirectional.fromSTEB(pointer ? HzSpace.s24 : HzSpace.s32 - HzSpace.s4, HzSpace.s12, HzSpace.s16, HzSpace.s12),
         child: Row(children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -233,7 +260,6 @@ class BundleTile extends StatelessWidget {
           ),
           Icon(entry.expanded ? HorizontSymbols.unfoldLess : HorizontSymbols.unfoldMore, size: HzIconSize.row, color: c.textMuted),
         ]),
-      ),
     );
   }
 }
@@ -241,17 +267,34 @@ class BundleTile extends StatelessWidget {
 /// A day header in Kennung type.
 class DayHeaderTile extends StatelessWidget {
   /// Creates the header.
-  const DayHeaderTile({required this.header, super.key});
+  const DayHeaderTile({required this.header, this.onMarkRead, super.key});
 
   /// The header.
   final DayHeader header;
 
+  /// Marks the unread articles of this day as read; null when there are
+  /// none. The action carries its word, it is no bare symbol in the bar.
+  final VoidCallback? onMarkRead;
+
   @override
-  Widget build(BuildContext context) => Semantics(
-        header: true,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(HzSpace.s16, HzSpace.s24, HzSpace.s16, HzSpace.s8),
-          child: Kennung(dayLabel(header.day), count: header.count),
-        ),
-      );
+  Widget build(BuildContext context) {
+    final pointer = HorizontTheme.of(context).density == HorizontDensity.pointer;
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(pointer ? HzSpace.s24 : HzSpace.s32 - HzSpace.s4, HzSpace.s16, HzSpace.s4, 0),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: pointer ? HzSize.rowDense : HzSize.touch),
+        child: Row(children: [
+          Expanded(child: Semantics(header: true, child: Kennung(dayLabel(header.day), count: header.count))),
+          if (onMarkRead != null)
+            TextButton.icon(
+              onPressed: onMarkRead,
+              icon: const Icon(HorizontSymbols.doneAll, size: HzIconSize.row),
+              label: const Text(S.dayRead),
+            )
+          else
+            const SizedBox(width: HzSpace.s12),
+        ]),
+      ),
+    );
+  }
 }
