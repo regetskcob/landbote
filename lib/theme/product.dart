@@ -5,7 +5,7 @@ import 'package:horizont/horizont.dart';
 ///
 /// Since Horizont 0.16.0 these decisions live here, not in Horizont. The
 /// values mirror `tool/horizont/horizont.product.json` (the form Horizont's
-/// web layer and tools read); `test/theme/product_test.dart` holds the two together and
+/// web layer and tools read); `test/ui/product_test.dart` holds the two together and
 /// checks the colours against Horizont's contrast rules. Change a colour in
 /// both files.
 const landbote = HorizontProduct(
